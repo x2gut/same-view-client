@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+.light {
+  --bg: #ffffff;
+  --text: #111827;
+  --card: #f8fafc;
+  --accent: #3b82f6;
+  --heading: #0f172a;
+}
+
+.dark {
+  --bg: #121212;
+  --text: #f1f5f9;
+  --card: #1e293b;
+  --accent: #6b7280;
+  --heading: #e2e8f0;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) skewX(-12deg);
+  }
+  100% {
+    transform: translateX(200%) skewX(-12deg);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 1s ease-in-out;
+}
+
+.ytp-watermark {
+  display: none !important;
+}
