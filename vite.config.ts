@@ -6,7 +6,6 @@ import * as path from "path";
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: "/same-view-client/",
   resolve: {
     alias: {
       "@shared": path.resolve(__dirname, "src/shared"),

@@ -14,7 +14,6 @@ const routes = createBrowserRouter(
       path: ROUTES.ROOM,
     },
   ],
-  { basename: ROUTES.BASENAME }
 );
 
 export default routes;
