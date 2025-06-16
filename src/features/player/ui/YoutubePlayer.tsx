@@ -2,12 +2,10 @@ import { useEffect, useState } from "react";
 import { YoutubeFrame } from "react-youtube-light";
 import { AnimatePresence, motion } from "framer-motion";
 import { Pause, Play } from "lucide-react";
-import usePlayer from "../model/usePlayer";
-import PlayerProgressBar from "./ProgressBar";
 import { useVideoStore } from "@/entities/video/model/store";
-import PauseButton from "./Pause";
 import { formatTime } from "@/shared/lib/formatTime";
-import Volume from "./Volume";
+import useYoutubePlayer from "../model/useYoutubePlayer";
+import { PauseButton, PlayerProgressBar, Volume } from "./components";
 
 const YoutubePlayer = ({
   src,
@@ -25,7 +23,7 @@ const YoutubePlayer = ({
     handlePause,
     handlePlay,
     handleChangeVolume,
-  } = usePlayer();
+  } = useYoutubePlayer();
   const [isHovered, setIsHovered] = useState(false);
   const [shouldShowCenterIcon, setShouldShowCenterIcon] = useState(false);
 

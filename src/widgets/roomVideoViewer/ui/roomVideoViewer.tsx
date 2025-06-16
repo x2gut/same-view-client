@@ -1,7 +1,7 @@
-import YoutubePlayer from "@/widgets/player/ui/YoutubePlayer";
 import { Youtube, YoutubeIcon } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useRoomVideoViewer } from "../model/useRoomVideoViewer";
+import YoutubePlayer from "@/features/player/ui/YoutubePlayer";
 
 const RoomVideoViewer = ({
   youtubeLink,

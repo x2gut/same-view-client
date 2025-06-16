@@ -13,7 +13,6 @@ const PauseButton = ({
   handleResume,
   className,
 }: PauseButtonProps) => {
-  // 3
   return (
     <div className={className}>
       {isVideoPaused ? (

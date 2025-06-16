@@ -10,7 +10,7 @@ import {
 import usePlayerSocketEvents from "./usePlayerSocketEvents";
 import { useVideoStore } from "@/entities/video/model/store";
 
-const usePlayer = () => {
+const useYoutubePlayer = () => {
   const { roomId } = useRoomStore();
   const { username } = useUserStore();
   const { setTotalDuration, setTimecode, setIsPaused } = useVideoStore();
@@ -86,4 +86,4 @@ const usePlayer = () => {
   };
 };
 
-export default usePlayer;
+export default useYoutubePlayer;

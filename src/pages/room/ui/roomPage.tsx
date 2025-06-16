@@ -1,6 +1,5 @@
 import { useLocation, useParams, Navigate } from "react-router-dom";
 import RoomHeader from "./roomHeader";
-import RoomVideoViewer from "../../../features/roomVideoViewer/ui/roomVideoViewer";
 import RoomVideoInput from "@/features/changeVIdeo/ui";
 import useChangeVideo from "@/features/changeVIdeo/model/useChangeVideo";
 import Chat from "@/features/chat/ui/Chat";
@@ -8,6 +7,7 @@ import toast from "react-hot-toast";
 import { useVideoStore } from "@/entities/video/model/store";
 import { useUserStore } from "@/entities/user/model/userStore";
 import SystemMessages from "@/features/systemMessages/ui/SystemMeessages";
+import RoomVideoViewer from "@/widgets/roomVideoViewer/ui/roomVideoViewer";
 
 const RoomPage = () => {
   const location = useLocation();
