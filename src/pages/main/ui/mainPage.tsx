@@ -1,4 +1,4 @@
-import { Container, Header } from "@/shared/ui";
+import { Container } from "@/shared/ui";
 import Button from "@/shared/ui/Button";
 import JoinRoomCard from "./components/joinRoomCard";
 import HowItWorks from "./components/howItWorks";
@@ -13,10 +13,15 @@ import {
 } from "./animations";
 import Footer from "@/widgets/footer/ui/Footer";
 import CreateRoomModal from "@/features/create-room/ui/createRoomModal";
+import { Plus, Users } from "lucide-react";
+import Header from "@/widgets/header/ui/Header";
+import Rooms from "./components/rooms";
 
 const MainPage = () => {
   const [isCreateRoomModalOpen, setCreateRoomModalOpen] = useState(false);
   const [isJoinRoomModalOpen, setIsJoinRoomModalOpen] = useState(false);
+
+  const rooms = JSON.parse(localStorage.getItem("rooms")) || [];
 
   return (
     <>
@@ -65,7 +70,9 @@ const MainPage = () => {
                   onClick={() => setCreateRoomModalOpen(true)}
                   size="large"
                   variant="primary"
+                  className="flex items-center gap-6 px-10"
                 >
+                  <Plus />
                   Create a Room
                 </Button>
               </motion.div>
@@ -75,7 +82,9 @@ const MainPage = () => {
                   onClick={() => setIsJoinRoomModalOpen(true)}
                   size="large"
                   variant="secondary"
+                  className="flex items-center gap-6 px-10"
                 >
+                  <Users />
                   Join a Room
                 </Button>
               </motion.div>
@@ -93,10 +102,19 @@ const MainPage = () => {
             <motion.div variants={itemVariants}>
               <JoinRoomCard />
             </motion.div>
+          </motion.div>
+        </Container>
 
-            <motion.div variants={itemVariants}>
-              <HowItWorks />
-            </motion.div>
+        {rooms.length >= 1 && (
+          <Rooms rooms={rooms} className="px-20 py-16 my-10" />
+        )}
+
+        <Container>
+          <motion.div
+            className="flex flex-col items-center gap-5"
+            variants={itemVariants}
+          >
+            <HowItWorks />
           </motion.div>
         </Container>
       </motion.main>

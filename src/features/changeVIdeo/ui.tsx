@@ -2,7 +2,7 @@ import { Button, Input } from "@/shared/ui";
 import { Link } from "lucide-react";
 import React from "react";
 
-const RoomVideoInput = ({
+const ChangeVideoInput = ({
   changeVideo,
   roomId,
   username,
@@ -40,4 +40,4 @@ const RoomVideoInput = ({
   );
 };
 
-export default RoomVideoInput;
+export default ChangeVideoInput;

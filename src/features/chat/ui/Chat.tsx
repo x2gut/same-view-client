@@ -12,17 +12,9 @@ interface ChatProps {
 
 const Chat: FC<ChatProps> = ({ roomId, username }) => {
   const { userMessages } = useMessageStore();
-  const { sendMessage, joinChat, onLeave, location } = useChat();
+  const { sendMessage } = useChat({roomId, username});
   const inputRef = useRef<HTMLInputElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    joinChat(roomId, username);
-
-    return () => {
-      onLeave();
-    };
-  }, [location.pathname]);
 
   const scrollToBottom = () => {
     chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;

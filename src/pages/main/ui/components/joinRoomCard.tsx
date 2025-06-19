@@ -18,7 +18,6 @@ const JoinRoomCard = () => {
   const handleGo = () => {
     const value = inputRef.current.value ?? "";
     setRoomKey(value);
-    console.log(roomKey);
     setIsOpen(true);
   };
 
@@ -27,7 +26,7 @@ const JoinRoomCard = () => {
       <CardHeader>
         <CardTitle>Join with a room code</CardTitle>
       </CardHeader>
-      <CardContent className="grid grid-cols-[1fr_auto] gap-2 w-full">
+      <CardContent className="flex gap-5 items-center">
         <Input ref={inputRef} fullWidth placeholder="Enter room code" />
         <Button onClick={handleGo} className="flex-none">
           Go

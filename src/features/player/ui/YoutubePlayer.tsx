@@ -14,7 +14,7 @@ const YoutubePlayer = ({
   src: string;
   onVideoReady: () => void;
 }) => {
-  const { totalDuration, timecode, isPaused } = useVideoStore();
+  const { totalDuration, isPaused, timecode } = useVideoStore();
   const {
     onVideoLoaded,
     handleClickOnPlayer,

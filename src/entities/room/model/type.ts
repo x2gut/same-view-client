@@ -5,6 +5,7 @@ export interface Room {
   password?: string;
   roomKey?: string;
   isPrivate: boolean;
+  createdAt: Date;
   video?: {
     url?: string;
     timecode?: string;
@@ -19,3 +20,8 @@ export interface RoomCreated {
 export interface RoomJoined {
   data: Room;
 }
+
+export type RoomLocalStorage = Pick<
+  Room,
+  "roomId" | "roomName" | "roomKey" | "isPrivate" | "createdAt"
+>;

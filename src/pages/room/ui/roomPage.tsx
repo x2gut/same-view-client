@@ -1,13 +1,13 @@
 import { useLocation, useParams, Navigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import RoomHeader from "./roomHeader";
-import RoomVideoInput from "@/features/changeVIdeo/ui";
 import useChangeVideo from "@/features/changeVIdeo/model/useChangeVideo";
 import Chat from "@/features/chat/ui/Chat";
-import toast from "react-hot-toast";
 import { useVideoStore } from "@/entities/video/model/store";
 import { useUserStore } from "@/entities/user/model/userStore";
 import SystemMessages from "@/features/systemMessages/ui/SystemMeessages";
 import RoomVideoViewer from "@/widgets/roomVideoViewer/ui/roomVideoViewer";
+import ChangeVideoInput from "@/features/changeVIdeo/ui";
 
 const RoomPage = () => {
   const location = useLocation();
@@ -29,7 +29,7 @@ const RoomPage = () => {
       <div className="flex-1 grid grid-cols-1 lg:grid-cols-[4fr_1fr] md:grid-cols-[3fr_1fr] overflow-hidden gap-2 p-2">
         <div className="flex flex-col w-full h-full overflow-hidden rounded-lg shadow">
           <RoomVideoViewer youtubeLink={currentVideoUrl} roomId={params.id} />
-          <RoomVideoInput
+          <ChangeVideoInput
             roomId={params.id}
             username={username}
             changeVideo={changeVideo}

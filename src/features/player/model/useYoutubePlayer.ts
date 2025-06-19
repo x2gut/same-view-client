@@ -48,18 +48,8 @@ const useYoutubePlayer = () => {
 
   const onVideoLoaded = () => {
     const player = playerControlsRef.current.getPlayer();
-    const timecode = useVideoStore.getState().timecode;
     const duration = player.getDuration();
     setTotalDuration(duration);
-
-    player.seekTo(timecode, true);
-
-    setTimeout(() => {
-      if (player && typeof player.unMute === "function") {
-        player.unMute();
-        player.pauseVideo();
-      }
-    }, 500);
   };
 
   const handleClickOnPlayer = () => {

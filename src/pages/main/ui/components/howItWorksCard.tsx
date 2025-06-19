@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import {
   Card,
   CardContent,
@@ -11,14 +12,14 @@ const HowItWorksCard = ({
   label,
   description,
 }: {
-  title: string;
+  title: ReactNode;
   label: string;
   description: string;
 }) => {
   return (
     <Card className="max-w-[240px]" variant="elevated">
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className="flex items-center justify-center">{title}</CardTitle>
         <CardTitle>{label}</CardTitle>
       </CardHeader>
       <CardContent>

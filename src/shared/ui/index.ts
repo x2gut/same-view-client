@@ -1,5 +1,4 @@
 export { default as MainLogo } from "./Logo";
-export { default as Header } from "../../widgets/header/ui/Header";
 export { default as Container } from "./Container";
 export { default as NavigationLink } from "./NavLink";
 export { default as Button } from "./Button";

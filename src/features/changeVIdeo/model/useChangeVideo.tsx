@@ -9,7 +9,7 @@ import { VideoEvents } from "@/entities/video/model/events";
 
 const useChangeVideo = () => {
   const { addMessage } = useMessageStore();
-  const { setVideoUrl } = useVideoStore();
+  const { setVideoUrl, setTimecode } = useVideoStore();
 
   const changeVideo = (
     videoUrl: string | null,
@@ -37,6 +37,7 @@ const useChangeVideo = () => {
   useEffect(() => {
     videoSocket.on(VideoEvents.VIDEO_CHANGED, (data: { videoUrl: string }) => {
       setVideoUrl(data.videoUrl);
+      setTimecode(0);
     });
 
     return () => {
