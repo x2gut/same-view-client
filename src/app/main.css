@@ -4,8 +4,9 @@
   --bg: #ffffff;
   --text: #111827;
   --card: #f8fafc;
-  --accent: #3b82f6;
+  --accent: #6b7280;
   --heading: #0f172a;
+  --card-border: #EEEEEE
 }
 
 .dark {
@@ -14,6 +15,7 @@
   --card: #1e293b;
   --accent: #6b7280;
   --heading: #e2e8f0;
+  --card-border: #EEEEEE
 }
 
 body {

@@ -1,5 +1,4 @@
 import { Youtube, YoutubeIcon } from "lucide-react";
-import { useState, useEffect } from "react";
 import { useRoomVideoViewer } from "../model/useRoomVideoViewer";
 import YoutubePlayer from "@/features/player/ui/YoutubePlayer";
 
@@ -10,26 +9,10 @@ const RoomVideoViewer = ({
   youtubeLink?: string;
   roomId: string;
 }) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
-  const { joinRoomVideo, leaveRoomVideo } = useRoomVideoViewer();
-
-  useEffect(() => {
-    joinRoomVideo(roomId);
-
-    return () => leaveRoomVideo();
-  }, [location.pathname]);
-
-  useEffect(() => {
-    if (youtubeLink) {
-      setIsLoading(true);
-      setHasError(false);
-    }
-  }, [youtubeLink]);
-
-  const handleIframeLoad = () => {
-    setIsLoading(false);
-  };
+  const { isLoading, hasError, handleIframeLoad } = useRoomVideoViewer({
+    roomId,
+    youtubeLink,
+  });
 
   return (
     <div className="flex items-center justify-center w-full h-full px-1 overflow-hidden rounded-lg shadow-inner">
