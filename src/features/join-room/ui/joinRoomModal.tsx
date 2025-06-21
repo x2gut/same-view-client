@@ -1,6 +1,6 @@
 import { Button, Input } from "@/shared/ui";
 import Modal, { ModalBody, ModalHeader } from "@/shared/ui/modal";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Form } from "react-router-dom";
 import useJoinRoom from "../model/useJoinRoom";
 
@@ -13,9 +13,15 @@ interface JoinRoomModalProps {
 const JoinRoomModal: FC<JoinRoomModalProps> = ({
   isOpen,
   onClose,
-  roomKey,
+  roomKey = "",
 }) => {
-  const { register, handleSubmit, joinRoom } = useJoinRoom();
+  const { register, handleSubmit, joinRoom, reset } = useJoinRoom();
+
+  useEffect(() => {
+    if (roomKey) {
+      reset({ roomKey });
+    }
+  }, [roomKey, reset]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -39,7 +45,7 @@ const JoinRoomModal: FC<JoinRoomModalProps> = ({
               fullWidth
               placeholder="Enter room key"
               label="Room Key"
-              defaultValue={roomKey}
+              value={roomKey}
             />
             <Input
               {...register("password")}

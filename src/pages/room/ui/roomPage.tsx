@@ -8,6 +8,7 @@ import { useUserStore } from "@/entities/user/model/userStore";
 import SystemMessages from "@/features/systemMessages/ui/SystemMeessages";
 import RoomVideoViewer from "@/widgets/roomVideoViewer/ui/roomVideoViewer";
 import ChangeVideoInput from "@/features/changeVIdeo/ui";
+import { useEffect } from "react";
 
 const RoomPage = () => {
   const location = useLocation();

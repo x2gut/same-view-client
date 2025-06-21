@@ -10,7 +10,7 @@ import { useVideoStore } from "@/entities/video/model/store";
 import { chatSocket, videoSocket } from "@/shared/api/socket/socket";
 
 const useJoinRoom = () => {
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register, reset } = useForm();
   const { setUsername } = useUserStore();
   const { setVideoUrl } = useVideoStore();
   const navigate = useNavigate();
@@ -50,7 +50,7 @@ const useJoinRoom = () => {
     }
   };
 
-  return { joinRoom, handleSubmit, register };
+  return { joinRoom, handleSubmit, register, reset };
 };
 
 export default useJoinRoom;

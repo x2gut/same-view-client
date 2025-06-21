@@ -1,26 +1,18 @@
 import MessageCard from "@/entities/message/ui/Message";
 import useSystemMessages from "../model/useSystemMessages";
 import useMessageStore from "@/entities/message/model/store";
-import ProgressBar from "@/shared/ui/ProgressBar";
 import { AnimatePresence, motion } from "framer-motion";
+import { memo } from "react";
 
 const SystemMessages = () => {
-  const { systemMessages: messages } = useMessageStore();
-  const {
-    isVisible,
-    setIsHovered,
-    progress,
-    notificationIndex,
-    goToNext,
-    goToPrevious,
-  } = useSystemMessages({ messages });
+  const messages = useMessageStore((state) => state.systemMessages);
+  const { isVisible, notificationIndex, goToNext, goToPrevious } =
+    useSystemMessages({ messages });
 
   return (
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
           style={{
             background: `var(--card)`,
             borderColor: "var(--accent)",
@@ -39,7 +31,6 @@ const SystemMessages = () => {
             translateY: -25,
           }}
         >
-          <ProgressBar className="w-full" max={85} value={progress} size="sm" />
           <div className="px-3 py-1">
             <div className="flex items-center gap-2">
               {messages.length > 1 && (
@@ -101,4 +92,4 @@ const SystemMessages = () => {
   );
 };
 
-export default SystemMessages;
+export default memo(SystemMessages);

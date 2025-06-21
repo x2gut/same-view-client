@@ -28,6 +28,32 @@ const YoutubePlayer = ({
   const [shouldShowCenterIcon, setShouldShowCenterIcon] = useState(false);
 
   useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (
+        document.activeElement?.tagName === "INPUT" ||
+        document.activeElement?.tagName === "TEXTAREA"
+      ) {
+        return;
+      }
+
+      switch (event.key) {
+        case "ArrowLeft":
+          event.preventDefault();
+          handleSeek(timecode -10);
+          break;
+        case "ArrowRight":
+          event.preventDefault();
+          handleSeek(timecode + 10);
+          break;
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown, { passive: false });
+
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleSeek]);
+
+  useEffect(() => {
     setShouldShowCenterIcon(true);
 
     const timeout = setTimeout(() => {
