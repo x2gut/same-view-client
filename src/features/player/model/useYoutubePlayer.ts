@@ -54,6 +54,7 @@ const useYoutubePlayer = () => {
 
   const handleClickOnPlayer = () => {
     const currentPlayerState = playerControlsRef.current?.videoState();
+    console.log(currentPlayerState)
     if (
       currentPlayerState === YT.PlayerState.PAUSED ||
       currentPlayerState === YT.PlayerState.UNSTARTED ||
