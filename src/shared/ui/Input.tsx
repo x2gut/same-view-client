@@ -103,7 +103,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             className={clsx(
               "rounded-md outline-none transition-colors",
               "focus:ring-2 focus:ring-opacity-20",
-              "placeholder:text-[var(--accent)]",
+              "placeholder:text-accent",
               sizeClasses[size_],
               variantClasses[variant],
               errorStateClasses,

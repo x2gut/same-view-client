@@ -46,6 +46,7 @@ const useJoinRoom = () => {
       if (error instanceof BaseApiError) {
         if (error.statusCode === 401) toast.error("Invalid password");
         else if (error.statusCode === 404) toast.error("Room not found");
+        else if (error.statusCode === 400) toast.error(error.message);
       }
     }
   };

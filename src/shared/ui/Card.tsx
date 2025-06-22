@@ -50,7 +50,7 @@ export const CardFooter = ({
   className?: string;
 }) => {
   return (
-    <div className={`mt-4 pt-4 border-t border-[var(--accent)] ${className}`}>
+    <div className={`mt-4 pt-4 border-t border-accent ${className}`}>
       {children}
     </div>
   );
@@ -66,9 +66,9 @@ export const Card = ({
   variant?: "default" | "elevated" | "outline" | "ghost";
 }) => {
   const variantClasses = {
-    default: "border border-[var(--accent)]",
-    elevated: "border border-[var(--accent)] shadow-md",
-    outline: "border border-[var(--accent)] bg-transparent",
+    default: "border border-accent",
+    elevated: "border border-accent shadow-md",
+    outline: "border border-accent bg-transparent",
     ghost: "bg-gray-50",
   };
 

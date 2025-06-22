@@ -3,7 +3,7 @@ import { NavigationLink } from "@/shared/ui";
 
 const Footer = () => {
   return (
-    <footer className="flex justify-between items-center border-t border-[var(--accent)] p-4">
+    <footer className="flex justify-between items-center border-t border-accent p-4">
       <p>© 2025 SyncViewRoom. All rights reserved.</p>
       <div>
         <nav className="flex gap-5">

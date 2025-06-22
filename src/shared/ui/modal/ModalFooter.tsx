@@ -6,7 +6,7 @@ interface ModalFooterProps extends PropsWithChildren {
 
 const ModalFooter = ({ children, className = "" }: ModalFooterProps) => (
   <div
-    className={`p-4 border-t border-[var(--accent)] flex justify-end space-x-2 ${className}`}
+    className={`p-4 border-t border-accent flex justify-end space-x-2 ${className}`}
   >
     {children}
   </div>

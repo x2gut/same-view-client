@@ -15,7 +15,7 @@ const NavLink = ({
     <Link
       to={to}
       className={clsx(
-        "block hover:bg-[var(--accent)] duration-200 py-2 px-4 rounded-md",
+        "block hover:bg-accent duration-200 py-2 px-4 rounded-md",
         className
       )}
     >

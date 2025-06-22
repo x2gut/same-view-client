@@ -29,7 +29,7 @@ const Modal = ({ children, isOpen, onClose, className }: ModalProps) => {
           translateY: 0,
         }}
         onClick={(event) => event.stopPropagation()}
-        className={`rounded-lg shadow-lg bg-[var(--card)] max-w-md w-full max-h-[90vh] overflow-auto ${className}`}
+        className={`rounded-lg shadow-lg bg-card max-w-md w-full max-h-[90vh] overflow-auto ${className}`}
       >
         <div>{children}</div>
       </motion.div>

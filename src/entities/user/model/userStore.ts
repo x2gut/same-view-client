@@ -9,7 +9,7 @@ interface UserStoreProps {
 export const useUserStore = create<UserStoreProps>()(
   persist(
     (set) => ({
-      username: "",
+      username: null,
       setUsername: (username) => set({ username: username }),
     }),
     {

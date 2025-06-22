@@ -18,12 +18,12 @@ const Page404 = () => {
 
   return (
     <>
-      <div className="relative min-h-screen overflow-hidden bg-[var(--background)]">
+      <div className="relative min-h-screen overflow-hidden bg-bg">
         <Container>
           <div className="flex justify-center flex-col gap-8 items-center pt-20 relative z-10">
             <div className="relative">
               <h2
-                className={`text-9xl font-bold bg-gradient-to-r from-[var(--text)] to-[var(--accent)] bg-clip-text text-transparent select-none transition-all duration-200`}
+                className={`text-9xl font-bold bg-gradient-to-r from-muted to-accent bg-clip-text text-transparent select-none transition-all duration-200`}
               >
                 404
               </h2>
@@ -31,28 +31,28 @@ const Page404 = () => {
 
             <Card
               variant="elevated"
-              className="relative px-10 py-10 max-w-2xl rounded-2xl border-[var(--card-border)] bg-[var(--card)] shadow-xl hover:scale-105 duration-300"
+              className="relative px-10 py-10 max-w-2xl rounded-2xl border-card-border bg-card shadow-xl hover:scale-105 duration-300"
             >
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-[var(--accent)]/20 to-[var(--accent)]/10 rounded-2xl blur opacity-50 dark:opacity-30" />
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-accent/20 to-accent/10 rounded-2xl blur opacity-50 dark:opacity-30" />
 
               <div className="relative">
                 <CardHeader className="flex justify-center items-center mb-6">
                   <div className="relative">
                     <Rocket
                       size={56}
-                      className="text-[var(--accent)] animate-bounce transform hover:rotate-12 hover:translate-x-3 hover:-translate-y-3 transition-transform duration-300"
+                      className="text-accent animate-bounce transform hover:rotate-12 hover:translate-x-3 hover:-translate-y-3 transition-transform duration-300"
                     />
                   </div>
                 </CardHeader>
 
                 <CardTitle>
-                  <h4 className="text-4xl font-bold text-center pb-6 text-[var(--text)]">
+                  <h4 className="text-4xl font-bold text-center pb-6 text-text">
                     Page Not Found
                   </h4>
                 </CardTitle>
 
                 <CardDescription>
-                  <p className="text-lg text-center text-[var(--text-secondary)] leading-relaxed mb-6">
+                  <p className="text-lg text-center text-muted leading-relaxed mb-6">
                     The page you're looking for seems to have drifted into
                     digital space. Let's help you navigate back to familiar
                     territory.
@@ -82,8 +82,8 @@ const Page404 = () => {
                       My Rooms
                     </Button>
                   </div>
-                  <div className="bg-[var(--accent)]/5 dark:bg-[var(--accent)]/10 rounded-xl p-4 mt-6 border border-[var(--accent)]/20">
-                    <p className="text-center text-sm text-[var(--text-secondary)]">
+                  <div className="bg-accent/5 dark:bg-accent/10 rounded-xl p-4 mt-6 border border-accent/20">
+                    <p className="text-center text-sm">
                       💡 <strong>Tip:</strong> Double-check the URL or use the
                       navigation menu to find what you're looking for.
                     </p>

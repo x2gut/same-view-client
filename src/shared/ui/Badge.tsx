@@ -70,10 +70,10 @@ const Badge = ({
   const variantClasses = {
     primary: outline
       ? "bg-transparent text-blue-600 border border-blue-600"
-      : "bg-[var(--accent)]",
+      : "bg-accent",
     secondary: outline
       ? "bg-transparent text-gray-600 border border-gray-600"
-      : "bg-[var(--accent)] text-gray-800",
+      : "bg-accent text-gray-800",
     success: outline
       ? "bg-transparent text-green-600 border border-green-600"
       : "bg-green-100 text-green-800",
@@ -88,10 +88,10 @@ const Badge = ({
       : "bg-cyan-100 text-cyan-800",
     dark: outline
       ? "bg-transparent text-gray-800 border border-gray-800"
-      : "bg-[var(--accent)] text-gray-100",
+      : "bg-accent text-gray-100",
     light: outline
       ? "bg-transparent text-gray-400 border border-gray-400"
-      : "bg-[var(--accent)] text-gray-700",
+      : "bg-accent text-gray-700",
   };
 
   // Dot styles

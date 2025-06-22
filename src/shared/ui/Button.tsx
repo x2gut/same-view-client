@@ -7,9 +7,9 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantStyles = {
-  primary: "bg-blue-500 text-white hover:brightness-110 duration-200",
-  secondary: "bg-transparent hover:brightness-80 duration-200 border-2 border-[var(--accent)]",
-  ghost: "bg-transparent hover:bg-[var(--accent)] duration-200",
+  primary: "bg-primary text-white hover:brightness-110 duration-200",
+  secondary: "bg-transparent hover:brightness-80 duration-200 border-2 border-accent",
+  ghost: "bg-transparent hover:bg-accent duration-200",
 };
 
 const sizeStyles = {

@@ -5,7 +5,7 @@ import { ROUTES } from "@/shared/routes/consts.js";
 
 export const Header = () => {
   return (
-    <header className="flex items-center justify-between p-4 border-b border-[var(--accent)]">
+    <header className="flex items-center justify-between p-4 border-b border-accent">
       <div className="flex items-center gap-20">
         <MainLogo />
         <nav className="">

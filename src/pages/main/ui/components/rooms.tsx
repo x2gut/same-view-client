@@ -20,11 +20,11 @@ const Rooms = ({
   const roomKeyRef = useRef<string>("");
 
   return (
-    <section className={clsx("bg-[var(--card)]/10", className)}>
+    <section className={clsx("bg-card/10", className)}>
       <Container>
         <div className="w-full px-10">
           <h2 className="text-4xl font-bold">My Rooms</h2>
-          <p className="py-5 text-[var(--accent)]">
+          <p className="py-5 text-muted">
             Quick access to your 3 recent rooms
           </p>
           <motion.div
@@ -45,7 +45,7 @@ const Rooms = ({
                 >
                   <CardHeader className="flex justify-between text-lg items-center font-bold">
                     {val.roomName}
-                    <Play size={20} color="var(--accent)" />
+                    <Play size={20} color="var(--primary)" />
                   </CardHeader>
                   <CardContent className="pt-3 flex flex-col gap-3">
                     <CopyBadge name={val.roomKey} />
@@ -61,7 +61,10 @@ const Rooms = ({
                         shape="rounded"
                         outline
                         size="sm"
-                        className="gap-2 px-4"
+                        className={clsx(
+                          "gap-2 px-4",
+                          val.isPrivate ? "border-error text-error" : "border-primary text-primary"
+                        )}
                       >
                         {val.isPrivate ? "Private" : "Public"}
                       </Badge>
