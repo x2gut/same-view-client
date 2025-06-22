@@ -15,7 +15,7 @@ const RoomHeader = ({
   const navigate = useNavigate();
 
   return (
-    <header className="border-b border-[var(--accent)] flex justify-between p-5 items-center">
+    <header className="border-b border-accent flex justify-between p-5 items-center">
       <div className="flex gap-3 items-center">
         <Button onClick={() => navigate(-1)} variant="ghost" className="px-5">
           <MoveLeft size={20} />

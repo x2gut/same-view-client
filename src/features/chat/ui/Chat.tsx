@@ -4,13 +4,19 @@ import { useChat } from "../model/useChat";
 import MessageCard from "../../../entities/message/ui/Message";
 import ChatHeader from "./ChatHeader";
 import useMessageStore from "@/entities/message/model/store";
+import clsx from "clsx";
 
 interface ChatProps {
   roomId: string;
   username: string;
+  setIsChatVisible?: (value: boolean) => void;
 }
 
-const Chat: FC<ChatProps> = ({ roomId, username }) => {
+const Chat: FC<ChatProps> = ({
+  roomId,
+  username,
+  setIsChatVisible,
+}) => {
   const [messageValue, setMessageValue] = useState("");
   const { userMessages } = useMessageStore();
   const { sendMessage, handleUserTyping } = useChat({ roomId, username });
@@ -44,8 +50,8 @@ const Chat: FC<ChatProps> = ({ roomId, username }) => {
   };
 
   return (
-    <div>
-      <ChatHeader />
+    <div className="w-80">
+      <ChatHeader setIsChatVisible={setIsChatVisible} />
       <div
         ref={chatContainerRef}
         style={{
@@ -53,11 +59,11 @@ const Chat: FC<ChatProps> = ({ roomId, username }) => {
           scrollbarWidth: "thin",
           scrollbarColor: "#CBD5E1 #F1F5F9",
         }}
-        className="px-5 py-4 overflow-y-auto reflex-grow scroll-smooth"
+        className="px-5 py-4 overflow-y-auto reflex-grow scroll-smooth w-full"
       >
         {userMessages && userMessages.length > 0 ? (
           userMessages.map((message, index) => (
-            <div key={index} className="px-2 mb-4">
+            <div key={index} className="px-2 mb-4 w-full overflow-x-hidden">
               <MessageCard
                 senderUsername={message.username}
                 username={username}
@@ -68,12 +74,12 @@ const Chat: FC<ChatProps> = ({ roomId, username }) => {
             </div>
           ))
         ) : (
-          <div className="py-10 text-center text-gray-500">
+          <div className={clsx("py-10 text-center text-gray-500")}>
             No messages yet. Start the conversation!
           </div>
         )}
       </div>
-      <div className="flex gap-5 py-3 items-center px-2 fixed bottom-0 border-t border-[var(--accent)] w-full">
+      <div className="flex justify-start pt-3 gap-5 items-center px-2 fixed bottom-0 w-full">
         <Input
           onKeyDown={handleKeyDown}
           onChange={(event) => {

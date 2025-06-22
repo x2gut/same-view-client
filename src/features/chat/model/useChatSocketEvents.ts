@@ -11,7 +11,8 @@ import { useNavigate } from "react-router-dom";
 const useChatSocketEvents = () => {
   const navigate = useNavigate();
   const { setUsers, setUsersTyping } = useChatStore();
-  const { addMessage } = useMessageStore();
+  const isChatVisible = useChatStore((state) => state.isChatVisible);
+  const { addMessage, setHasNewMessages, hasNewMessages } = useMessageStore();
 
   useEffect(() => {
     chatSocket.on(ChatEvents.ERROR, (errorMessage: ChatError) => {
@@ -20,6 +21,11 @@ const useChatSocketEvents = () => {
     });
 
     chatSocket.on(ChatEvents.NEW_MESSAGE, (message: Message) => {
+      console.log(isChatVisible);
+      if (!isChatVisible) {
+        setHasNewMessages(true);
+        console.log(hasNewMessages);
+      }
       addMessage(message);
       message.users && setUsers(message.users);
     });
@@ -34,8 +40,9 @@ const useChatSocketEvents = () => {
     return () => {
       chatSocket.off(ChatEvents.ERROR);
       chatSocket.off(ChatEvents.NEW_MESSAGE);
+      chatSocket.off(ChatEvents.USER_IS_TYPING);
     };
-  }, []);
+  }, [isChatVisible]);
 };
 
 export default useChatSocketEvents;

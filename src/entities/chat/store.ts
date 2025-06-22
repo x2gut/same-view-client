@@ -1,13 +1,18 @@
 import { create } from "zustand";
 
 interface ChatStore {
+  isChatVisible: boolean;
   users: string[];
   usersTyping: string[];
   setUsersTyping: (user: string) => void;
   setUsers: (users: string[]) => void;
+  toggleChatVisible: () => void;
 }
 
 const useChatStore = create<ChatStore>((set, get) => ({
+  isChatVisible: true,
+  toggleChatVisible: () =>
+    set((state) => ({ isChatVisible: !state.isChatVisible })),
   users: [],
   setUsers: (users) =>
     set(() => ({
