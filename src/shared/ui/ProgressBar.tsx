@@ -120,7 +120,7 @@ const ProgressBar = ({
       >
         <div
           className={`
-            h-full rounded-full transition-all duration-500 ease-out relative overflow-hidden
+            h-full rounded-full ease-out relative overflow-hidden
             ${variantClasses[variant]}
             ${isAnimating ? "transition-all duration-500" : ""}
             ${

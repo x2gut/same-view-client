@@ -10,6 +10,8 @@ interface VideoStore {
   setTotalDuration: (duration: number) => void;
   isPaused: boolean;
   setIsPaused: (value: boolean) => void;
+  isLoading: boolean;
+  setIsLoading: (value: boolean) => void;
 }
 
 export const useVideoStore = create<VideoStore>()(
@@ -25,6 +27,8 @@ export const useVideoStore = create<VideoStore>()(
       setTotalDuration: (duration) => set({ totalDuration: duration }),
       isPaused: true,
       setIsPaused: (value) => set({ isPaused: value }),
+      isLoading: false,
+      setIsLoading: (value) => set({ isLoading: value }),
     }),
     {
       name: "videoUrl",

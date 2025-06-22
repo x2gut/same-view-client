@@ -34,8 +34,15 @@ const Rooms = ({
             variants={containerVariants}
           >
             {rooms.map((val) => (
-              <motion.div className="flex-1" variants={itemVariants}>
-                <Card key={val.roomKey} className="flex-1" variant="elevated">
+              <motion.div
+                key={val.roomKey}
+                className="flex-1"
+                variants={itemVariants}
+              >
+                <Card
+                  className="flex-1  min-w-56 max-w-[372px]"
+                  variant="elevated"
+                >
                   <CardHeader className="flex justify-between text-lg items-center font-bold">
                     {val.roomName}
                     <Play size={20} color="var(--accent)" />

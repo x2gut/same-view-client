@@ -32,19 +32,12 @@ const PlayerProgressBar: FC<ProgressBarProps> = ({
     setHoverPosition(hoverX);
   };
 
-  const handlePlayerWrapperClick = (
+  const handleProgressBarWrapperClick = (
     event: React.MouseEvent<HTMLDivElement>
   ) => {
     if (!handleSeek) return;
 
-    const rect = progressBarRef.current?.getBoundingClientRect();
-    if (!rect) return;
-
-    const clickX = event.clientX - rect.left;
-    const clickPercent = clickX / rect.width;
-    const seekTime = clickPercent * totalDuration;
-    
-    handleSeek(seekTime);
+    handleSeek(hoverTime);
   };
 
   return (
@@ -53,9 +46,9 @@ const PlayerProgressBar: FC<ProgressBarProps> = ({
       style={{ left: `${hoverPosition}px` }}
     >
       <div
-        className="w-full cursor-pointer"
+        className="relative w-full cursor-pointer"
         ref={progressBarRef}
-        onClick={handlePlayerWrapperClick}
+        onClick={handleProgressBarWrapperClick}
         onMouseMove={handleMouseMove}
       >
         <ProgressBar
@@ -63,6 +56,12 @@ const PlayerProgressBar: FC<ProgressBarProps> = ({
           value={percent * 100}
           animated={false}
         />
+        <span
+          className="block absolute rounded-full bg-blue-500 size-3 top-1/2 -translate-x-2 -translate-y-1/2"
+          style={{
+            left: `${percent * 100}%`,
+          }}
+        ></span>
       </div>
     </Tooltip>
   );

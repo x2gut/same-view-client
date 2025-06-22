@@ -1,6 +1,7 @@
 import { Youtube, YoutubeIcon } from "lucide-react";
 import { useRoomVideoViewer } from "../model/useRoomVideoViewer";
 import YoutubePlayer from "@/features/player/ui/YoutubePlayer";
+import { useVideoStore } from "@/entities/video/model/store";
 
 const RoomVideoViewer = ({
   youtubeLink,
@@ -9,7 +10,8 @@ const RoomVideoViewer = ({
   youtubeLink?: string;
   roomId: string;
 }) => {
-  const { isLoading, hasError, handleIframeLoad } = useRoomVideoViewer({
+  const isLoading = useVideoStore((state) => state.isLoading);
+  const { hasError, handleIframeLoad } = useRoomVideoViewer({
     roomId,
     youtubeLink,
   });

@@ -1,21 +1,18 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Plus, Users } from "lucide-react";
 import { Container } from "@/shared/ui";
 import Button from "@/shared/ui/Button";
-import JoinRoomCard from "./components/joinRoomCard";
-import HowItWorks from "./components/howItWorks";
 import {
   buttonVariants,
   containerVariants,
   itemVariants,
   titleVariants,
 } from "./animations";
-import Footer from "@/widgets/footer/ui/Footer";
 import CreateRoomModal from "@/features/create-room/ui/createRoomModal";
-import Header from "@/widgets/header/ui/Header";
-import Rooms from "./components/rooms";
 import JoinRoomModal from "@/features/join-room/ui/joinRoomModal";
+import { HowItWorks, JoinRoomCard, Rooms } from "./components";
+import { Header, Footer } from "@/widgets";
 
 const MainPage = () => {
   const [isCreateRoomModalOpen, setCreateRoomModalOpen] = useState(false);
@@ -100,18 +97,13 @@ const MainPage = () => {
             </motion.div>
 
             <motion.div variants={itemVariants}>
-              <JoinRoomCard
-                handleModalOpen={setIsJoinRoomModalOpen}
-              />
+              <JoinRoomCard handleModalOpen={setIsJoinRoomModalOpen} />
             </motion.div>
           </motion.div>
         </Container>
 
         {rooms.length >= 1 && (
-          <Rooms
-            rooms={rooms}
-            className="px-20 py-16 my-10"
-          />
+          <Rooms rooms={rooms} className="px-20 py-16 my-10" />
         )}
 
         <Container>

@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 import { joinVideoRoom, leaveVideoRoom } from "../api/socket/handlers";
 import { useEffect, useState } from "react";
 import { videoSocket } from "@/shared/api/socket/socket";
+import { useVideoStore } from "@/entities/video/model/store";
 
 export const useRoomVideoViewer = ({
   roomId,
@@ -10,7 +11,7 @@ export const useRoomVideoViewer = ({
   roomId: string;
   youtubeLink: string;
 }) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const { setIsLoading } = useVideoStore();
   const [hasError, setHasError] = useState(false);
   const location = useLocation();
 
@@ -47,7 +48,6 @@ export const useRoomVideoViewer = ({
 
   return {
     handleIframeLoad,
-    isLoading,
     hasError,
   };
 };

@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
-import { YoutubeFrame } from "react-youtube-light";
+import { useEffect, useRef, useState } from "react";
+import { YoutubeControls, YoutubeFrame } from "react-youtube-light";
 import { AnimatePresence, motion } from "framer-motion";
 import { Pause, Play } from "lucide-react";
 import { useVideoStore } from "@/entities/video/model/store";
 import { formatTime } from "@/shared/lib/formatTime";
-import useYoutubePlayer from "../model/useYoutubePlayer";
 import { PauseButton, PlayerProgressBar, Volume } from "./components";
+import { YoutubePlayerAdapter } from "@/entities/player/model/adapters/youtubePlayerAdapter";
+import usePlayer from "../model/hooks/usePlayer";
 
 const YoutubePlayer = ({
   src,
@@ -15,18 +16,28 @@ const YoutubePlayer = ({
   onVideoReady: () => void;
 }) => {
   const { totalDuration, isPaused, timecode } = useVideoStore();
+  const youtubePlayerControls = useRef<YoutubeControls>(null);
+  const [youtubePlayerAdapter, setYoutubePlayerAdapter] =
+    useState<YoutubePlayerAdapter | null>(null);
+
   const {
-    onVideoLoaded,
     handleClickOnPlayer,
-    playerControlsRef,
     handleSeek,
     handlePause,
     handlePlay,
     handleChangeVolume,
-  } = useYoutubePlayer();
+  } = usePlayer(youtubePlayerAdapter);
   const [isHovered, setIsHovered] = useState(false);
   const [shouldShowCenterIcon, setShouldShowCenterIcon] = useState(false);
 
+  const handleVideoReady = () => {
+    if (!youtubePlayerControls.current) {
+      return;
+    }
+    const adapter = new YoutubePlayerAdapter(youtubePlayerControls.current);
+    setYoutubePlayerAdapter(adapter);
+    onVideoReady();
+  };
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (
@@ -39,7 +50,7 @@ const YoutubePlayer = ({
       switch (event.key) {
         case "ArrowLeft":
           event.preventDefault();
-          handleSeek(timecode -10);
+          handleSeek(timecode - 10);
           break;
         case "ArrowRight":
           event.preventDefault();
@@ -67,13 +78,10 @@ const YoutubePlayer = ({
     <div className="relative w-full h-full">
       <YoutubeFrame
         hideControls
-        ref={playerControlsRef}
+        ref={youtubePlayerControls}
         containerClassNames="w-full h-full"
         src={src}
-        onVideoReady={() => {
-          onVideoLoaded();
-          onVideoReady();
-        }}
+        onVideoReady={handleVideoReady}
       />
       <AnimatePresence>
         {shouldShowCenterIcon && (
