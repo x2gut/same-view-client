@@ -45,7 +45,7 @@ const JoinRoomModal: FC<JoinRoomModalProps> = ({
               fullWidth
               placeholder="Enter room key"
               label="Room Key"
-              value={roomKey}
+              defaultValue={roomKey}
             />
             <Input
               {...register("password")}

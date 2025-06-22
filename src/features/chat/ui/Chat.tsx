@@ -1,5 +1,5 @@
 import { Button, Input } from "@/shared/ui";
-import { FC, useEffect, useRef } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { useChat } from "../model/useChat";
 import MessageCard from "../../../entities/message/ui/Message";
 import ChatHeader from "./ChatHeader";
@@ -11,22 +11,27 @@ interface ChatProps {
 }
 
 const Chat: FC<ChatProps> = ({ roomId, username }) => {
+  const [messageValue, setMessageValue] = useState("");
   const { userMessages } = useMessageStore();
-  const { sendMessage } = useChat({roomId, username});
-  const inputRef = useRef<HTMLInputElement>(null);
+  const { sendMessage, handleUserTyping } = useChat({ roomId, username });
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
     chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
   };
 
+  useEffect(() => {
+    scrollToBottom();
+  }, [userMessages]);
+
   const handleSendMessage = () => {
     sendMessage({
       senderUsername: username,
-      message: inputRef.current.value,
+      message: messageValue,
       roomId: roomId,
     });
-    inputRef.current.value = "";
+    setMessageValue("");
+
     setTimeout(() => {
       scrollToBottom();
     }, 50);
@@ -71,7 +76,11 @@ const Chat: FC<ChatProps> = ({ roomId, username }) => {
       <div className="flex gap-5 py-3 items-center px-2 fixed bottom-0 border-t border-[var(--accent)] w-full">
         <Input
           onKeyDown={handleKeyDown}
-          ref={inputRef}
+          onChange={(event) => {
+            setMessageValue(event.target.value);
+            handleUserTyping();
+          }}
+          value={messageValue}
           placeholder="Send a message"
           fullWidth
         />

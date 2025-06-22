@@ -1,10 +1,10 @@
 import useRoomStore from "@/entities/room/model/roomStore";
 import { useLocation } from "react-router-dom";
-import { onJoinChat, onLeaveChat } from "../api/socket/handlers";
 import { chatSocket } from "@/shared/api/socket/socket";
 import { ChatEvents } from "@/entities/chat/events";
 import useChatSocketEvents from "./useChatSocketEvents";
 import { useEffect } from "react";
+import useDebounce from "@/shared/hooks/useDebounce";
 
 export const useChat = ({
   roomId,
@@ -17,14 +17,20 @@ export const useChat = ({
   const { setRoomId } = useRoomStore();
   useChatSocketEvents();
 
+  const handleUserTyping = useDebounce(() => {
+    chatSocket.emit(ChatEvents.USER_IS_TYPING, {
+      roomId,
+      username,
+    });
+  }, 200);
+
   const joinChat = (roomId: string, username: string) => {
     if (location.pathname.includes("room")) {
-      
       if (!chatSocket.connected) {
         chatSocket.connect();
       }
 
-      onJoinChat(username, roomId);
+      chatSocket.emit(ChatEvents.ON_USER_JOIN, { username, roomId });
       setRoomId(roomId);
     }
   };
@@ -48,7 +54,7 @@ export const useChat = ({
   };
 
   const onLeave = () => {
-    onLeaveChat();
+    chatSocket.disconnect();
   };
 
   useEffect(() => {
@@ -62,6 +68,7 @@ export const useChat = ({
   return {
     sendMessage,
     joinChat,
+    handleUserTyping,
     onLeave,
     location,
   };

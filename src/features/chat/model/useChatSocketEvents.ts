@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 const useChatSocketEvents = () => {
   const navigate = useNavigate();
-  const { setUsers } = useChatStore();
+  const { setUsers, setUsersTyping } = useChatStore();
   const { addMessage } = useMessageStore();
 
   useEffect(() => {
@@ -23,6 +23,13 @@ const useChatSocketEvents = () => {
       addMessage(message);
       message.users && setUsers(message.users);
     });
+
+    chatSocket.on(
+      ChatEvents.USER_IS_TYPING,
+      ({ username }: { username: string }) => {
+        setUsersTyping(username);
+      }
+    );
 
     return () => {
       chatSocket.off(ChatEvents.ERROR);
