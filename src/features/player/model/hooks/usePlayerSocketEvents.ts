@@ -1,29 +1,22 @@
 import { createSystemMessage } from "@/entities/message/lib/createSystemMessage";
 import useMessageStore from "@/entities/message/model/store";
-import useRoomStore from "@/entities/room/model/roomStore";
+import { Player } from "@/entities/player/model/types";
 import { VideoEvents } from "@/entities/video/model/events";
 import { useVideoStore } from "@/entities/video/model/store";
 import { RoomVideo } from "@/entities/video/model/types";
 import { videoSocket } from "@/shared/api/socket/socket";
 import { formatTime } from "@/shared/lib/formatTime";
-import { RefObject, useEffect } from "react";
-import { YoutubeControls } from "react-youtube-light";
+import { useEffect } from "react";
 
-interface UsePlayerSocketEventsProps {
-  playerControlsRef: RefObject<YoutubeControls>;
-}
-
-const usePlayerSocketEvents = ({
-  playerControlsRef,
-}: UsePlayerSocketEventsProps) => {
+const usePlayerSocketEvents = (player: Player) => {
   const { addMessage } = useMessageStore();
-  const { setTimecode, setIsPaused } = useVideoStore();
+  const { setTimecode, setIsPaused, setIsLoading } = useVideoStore();
 
   useEffect(() => {
     videoSocket.on(VideoEvents.VIDEO_PAUSED, (data: { username: string }) => {
       const message = createSystemMessage(`${data.username} paused the video.`);
       addMessage(message);
-      playerControlsRef.current?.pause();
+      player.pause();
       setIsPaused(true);
     });
 
@@ -31,6 +24,7 @@ const usePlayerSocketEvents = ({
       const { timecode } = data.video;
       if (timecode) {
         setTimecode(timecode);
+        player.seekTo(timecode);
       }
     });
 
@@ -39,7 +33,7 @@ const usePlayerSocketEvents = ({
         `${data.username} resumed the video.`
       );
       addMessage(message);
-      playerControlsRef.current?.play();
+      player.play();
       setIsPaused(false);
     });
 
@@ -48,7 +42,8 @@ const usePlayerSocketEvents = ({
       (data: { seconds: number; username: string }) => {
         const { username, seconds } = data;
 
-        playerControlsRef.current?.seekTo(seconds);
+        player.seekTo(seconds);
+        setIsLoading(false);
         const message = createSystemMessage(
           `${username} seeked to ${formatTime(seconds)}`
         );
@@ -62,7 +57,7 @@ const usePlayerSocketEvents = ({
       videoSocket.off(VideoEvents.VIDEO_SEEKED);
       videoSocket.off(VideoEvents.ON_USER_JOIN);
     };
-  }, []);
+  }, [player]);
 };
 
 export default usePlayerSocketEvents;
