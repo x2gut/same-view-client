@@ -6,10 +6,10 @@ import { useVideoStore } from "@/entities/video/model/store";
 
 export const useRoomVideoViewer = ({
   roomId,
-  youtubeLink,
+  videoLink,
 }: {
   roomId: string;
-  youtubeLink: string;
+  videoLink: string;
 }) => {
   const { setIsLoading } = useVideoStore();
   const [hasError, setHasError] = useState(false);
@@ -40,11 +40,11 @@ export const useRoomVideoViewer = ({
   }, [location.pathname]);
 
   useEffect(() => {
-    if (youtubeLink) {
+    if (videoLink) {
       setIsLoading(true);
       setHasError(false);
     }
-  }, [youtubeLink]);
+  }, [videoLink]);
 
   return {
     handleIframeLoad,

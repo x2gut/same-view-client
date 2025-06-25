@@ -34,7 +34,7 @@ const RoomPage = () => {
       <RoomHeader roomKey={roomKey} roomName={roomName} hostName={username} />
       <div className="flex-1 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_auto_auto] gap-2 p-2 overflow-hidden">
         <div className="flex flex-col w-full h-full overflow-hidden rounded-lg shadow">
-          <RoomVideoViewer youtubeLink={currentVideoUrl} roomId={params.id} />
+          <RoomVideoViewer videoLink={currentVideoUrl} roomId={params.id} />
           <ChangeVideoInput
             roomId={params.id}
             username={username}

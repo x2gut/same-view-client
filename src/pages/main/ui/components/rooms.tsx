@@ -36,7 +36,7 @@ const Rooms = ({
             {rooms.map((val) => (
               <motion.div
                 key={val.roomKey}
-                className="flex-1"
+                className="flex-1 hover:scale-105 duration-200"
                 variants={itemVariants}
               >
                 <Card

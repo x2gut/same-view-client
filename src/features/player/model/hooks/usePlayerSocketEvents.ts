@@ -6,11 +6,21 @@ import { useVideoStore } from "@/entities/video/model/store";
 import { RoomVideo } from "@/entities/video/model/types";
 import { videoSocket } from "@/shared/api/socket/socket";
 import { formatTime } from "@/shared/lib/formatTime";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const usePlayerSocketEvents = (player: Player) => {
   const { addMessage } = useMessageStore();
   const { setTimecode, setIsPaused, setIsLoading } = useVideoStore();
+  const timecodeBuffer = useRef<number | null>(null);
+
+  useEffect(() => {
+    const bufferedTimecode = timecodeBuffer.current;
+    if (player && bufferedTimecode) {
+      player.seekTo(bufferedTimecode);
+      player.pause();
+      timecodeBuffer.current = null;
+    }
+  }, [player]);
 
   useEffect(() => {
     videoSocket.on(VideoEvents.VIDEO_PAUSED, (data: { username: string }) => {
@@ -22,10 +32,14 @@ const usePlayerSocketEvents = (player: Player) => {
 
     videoSocket.on(VideoEvents.ON_USER_JOIN, (data: { video: RoomVideo }) => {
       const { timecode } = data.video;
-      if (timecode) {
-        setTimecode(timecode);
-        player.seekTo(timecode);
+      if (!timecode) return;
+
+      if (!player) {
+        timecodeBuffer.current = timecode;
       }
+
+      setTimecode(timecode);
+      player.seekTo(timecode);
     });
 
     videoSocket.on(VideoEvents.VIDEO_RESUMED, (data: { username: string }) => {

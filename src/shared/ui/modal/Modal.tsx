@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { PropsWithChildren } from "react";
+import { KeyboardEvent, PropsWithChildren, useEffect } from "react";
 import { createPortal } from "react-dom";
 
 interface ModalProps extends PropsWithChildren {
@@ -9,6 +9,10 @@ interface ModalProps extends PropsWithChildren {
 }
 
 const Modal = ({ children, isOpen, onClose, className }: ModalProps) => {
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "auto";
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return createPortal(

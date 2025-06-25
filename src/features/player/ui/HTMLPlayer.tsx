@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import { YoutubeControls, YoutubeFrame } from "react-youtube-light";
 import { AnimatePresence, motion } from "framer-motion";
 import { Pause, Play } from "lucide-react";
 import { useVideoStore } from "@/entities/video/model/store";
 import { formatTime } from "@/shared/lib/formatTime";
 import { PauseButton, PlayerProgressBar, Volume } from "./components";
-import { YoutubePlayerAdapter } from "@/entities/player/model/adapters/youtubePlayerAdapter";
 import usePlayer from "../model/hooks/usePlayer";
+import { HTMLPlayerAdapter } from "@/entities/player/model/adapters/htmlPlayerAdapter";
 
-const YoutubePlayer = ({
+const HtmlPlayer = ({
   src,
   onVideoReady,
 }: {
@@ -16,9 +15,9 @@ const YoutubePlayer = ({
   onVideoReady: () => void;
 }) => {
   const { totalDuration, isPaused, timecode } = useVideoStore();
-  const youtubePlayerControls = useRef<YoutubeControls>(null);
-  const [youtubePlayerAdapter, setYoutubePlayerAdapter] =
-    useState<YoutubePlayerAdapter | null>(null);
+  const playerRef = useRef<HTMLVideoElement>(null);
+  const [htmlPlayerAdapter, setHtmlPlayerAdapter] =
+    useState<HTMLPlayerAdapter | null>(null);
 
   const {
     handleClickOnPlayer,
@@ -26,16 +25,16 @@ const YoutubePlayer = ({
     handlePause,
     handlePlay,
     handleChangeVolume,
-  } = usePlayer(youtubePlayerAdapter);
+  } = usePlayer(htmlPlayerAdapter);
   const [isHovered, setIsHovered] = useState(false);
   const [shouldShowCenterIcon, setShouldShowCenterIcon] = useState(false);
 
   const handleVideoReady = () => {
-    if (!youtubePlayerControls.current) {
+    if (!playerRef.current) {
       return;
     }
-    const adapter = new YoutubePlayerAdapter(youtubePlayerControls.current);
-    setYoutubePlayerAdapter(adapter);
+    const adapter = new HTMLPlayerAdapter(playerRef.current);
+    setHtmlPlayerAdapter(adapter);
     onVideoReady();
   };
 
@@ -77,13 +76,12 @@ const YoutubePlayer = ({
 
   return (
     <div className="relative w-full h-full">
-      <YoutubeFrame
-        hideControls
-        ref={youtubePlayerControls}
-        containerClassNames="w-full h-full"
+      <video
+        className="w-full h-full"
+        ref={playerRef}
         src={src}
-        onVideoReady={handleVideoReady}
-      />
+        onLoadedData={handleVideoReady}
+      ></video>
       <AnimatePresence>
         {shouldShowCenterIcon && (
           <motion.div
@@ -141,4 +139,4 @@ const YoutubePlayer = ({
   );
 };
 
-export default YoutubePlayer;
+export default HtmlPlayer;

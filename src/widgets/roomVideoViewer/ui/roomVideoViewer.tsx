@@ -2,23 +2,27 @@ import { Youtube, YoutubeIcon } from "lucide-react";
 import { useRoomVideoViewer } from "../model/useRoomVideoViewer";
 import YoutubePlayer from "@/features/player/ui/YoutubePlayer";
 import { useVideoStore } from "@/entities/video/model/store";
+import { useEffect } from "react";
+import HtmlPlayer from "@/features/player/ui/HTMLPlayer";
 
 const RoomVideoViewer = ({
-  youtubeLink,
+  videoLink,
   roomId,
 }: {
-  youtubeLink?: string;
+  videoLink?: string;
   roomId: string;
 }) => {
   const isLoading = useVideoStore((state) => state.isLoading);
   const { hasError, handleIframeLoad } = useRoomVideoViewer({
     roomId,
-    youtubeLink,
+    videoLink,
   });
+  const playerType =
+    videoLink && videoLink.includes("youtube") ? "youtube" : "html";
 
   return (
     <div className="flex items-center justify-center w-full h-full px-1 overflow-hidden rounded-lg shadow-inner">
-      {youtubeLink ? (
+      {videoLink ? (
         <div className="relative w-full h-full min-h-64">
           {isLoading && (
             <div className="absolute inset-0 flex items-center justify-center">
@@ -45,7 +49,11 @@ const RoomVideoViewer = ({
               </div>
             </div>
           )}
-          <YoutubePlayer src={youtubeLink} onVideoReady={handleIframeLoad} />
+          {playerType === "youtube" ? (
+            <YoutubePlayer src={videoLink} onVideoReady={handleIframeLoad} />
+          ) : (
+            <HtmlPlayer src={videoLink} onVideoReady={handleIframeLoad} />
+          )}
         </div>
       ) : (
         <div className="max-w-sm p-8 text-center rounded-lg shadow-sm">

@@ -2,6 +2,10 @@ import { Player, PlayerState } from "../types";
 
 export class HTMLPlayerAdapter implements Partial<Player> {
   constructor(private player: HTMLVideoElement) {
+    if (!player) {
+      throw new Error("Player must be initialized first!");
+    }
+
     this.player = player;
   }
 
@@ -33,7 +37,7 @@ export class HTMLPlayerAdapter implements Partial<Player> {
   }
 
   seekTo(seconds: number) {
-    this.player.fastSeek(seconds);
+    this.player.currentTime = seconds;
   }
 
   getVolume() {
@@ -52,12 +56,16 @@ export class HTMLPlayerAdapter implements Partial<Player> {
     return this.player.duration;
   }
 
-  mute(): void {
+  mute() {
     this.player.muted = true;
   }
 
-  unmute(): void {
+  unmute() {
     this.player.muted = false;
+  }
+
+  loadVideoByUrl(url: string) {
+    this.player.src = url;
   }
 
   isPlayerReady(): boolean {
