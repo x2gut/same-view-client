@@ -8,11 +8,11 @@ import {
   containerVariants,
   itemVariants,
   titleVariants,
-} from "./animations";
-import CreateRoomModal from "@/features/create-room/ui/createRoomModal";
-import JoinRoomModal from "@/features/join-room/ui/joinRoomModal";
+} from "../../../shared/ui/animations";
 import { HowItWorks, JoinRoomCard, Rooms } from "./components";
 import { Header, Footer } from "@/widgets";
+import CreateRoomModal from "@/features/room/create-room/ui/createRoomModal";
+import JoinRoomModal from "@/features/room/join-room/ui/joinRoomModal";
 
 const MainPage = () => {
   const [isCreateRoomModalOpen, setCreateRoomModalOpen] = useState(false);
@@ -31,7 +31,7 @@ const MainPage = () => {
       </motion.div>
 
       <motion.main
-        className="py-10"
+        className="py-10 px-2"
         initial="hidden"
         animate="visible"
         variants={containerVariants}
@@ -42,7 +42,7 @@ const MainPage = () => {
             variants={containerVariants}
           >
             <motion.h2
-              className="text-6xl font-semibold mb-5"
+              className="text-6xl font-semibold mb-5 text-center"
               variants={titleVariants}
             >
               Watch Together,
@@ -59,7 +59,7 @@ const MainPage = () => {
             </motion.p>
 
             <motion.div
-              className="flex gap-10 mb-5"
+              className="flex gap-10 mb-5 flex-wrap items-center justify-center"
               variants={containerVariants}
             >
               <motion.div variants={buttonVariants}>
@@ -103,7 +103,7 @@ const MainPage = () => {
         </Container>
 
         {rooms.length >= 1 && (
-          <Rooms rooms={rooms} className="px-20 py-16 my-10" />
+          <Rooms rooms={rooms} className="my-10 py-10" />
         )}
 
         <Container>

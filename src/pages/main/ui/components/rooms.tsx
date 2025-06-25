@@ -5,9 +5,12 @@ import { motion } from "framer-motion";
 import { RoomLocalStorage } from "@/entities/room/model/type";
 import { Badge, Button, Container, CopyBadge } from "@/shared/ui";
 import { Card, CardContent, CardHeader } from "@/shared/ui/Card";
-import { containerVariants, itemVariants } from "../animations";
+import {
+  containerVariants,
+  itemVariants,
+} from "../../../../shared/ui/animations";
 import { useRef, useState } from "react";
-import JoinRoomModal from "@/features/join-room/ui/joinRoomModal";
+import JoinRoomModal from "@/features/room/join-room/ui/joinRoomModal";
 
 const Rooms = ({
   rooms,
@@ -22,11 +25,9 @@ const Rooms = ({
   return (
     <section className={clsx("bg-card/10", className)}>
       <Container>
-        <div className="w-full px-10">
+        <div className="w-full px-3">
           <h2 className="text-4xl font-bold">My Rooms</h2>
-          <p className="py-5 text-muted">
-            Quick access to your 3 recent rooms
-          </p>
+          <p className="py-5 text-muted">Quick access to your 3 recent rooms</p>
           <motion.div
             className="flex justify-between gap-10 items-center flex-wrap"
             initial="hidden"
@@ -63,7 +64,9 @@ const Rooms = ({
                         size="sm"
                         className={clsx(
                           "gap-2 px-4",
-                          val.isPrivate ? "border-error text-error" : "border-primary text-primary"
+                          val.isPrivate
+                            ? "border-error text-error"
+                            : "border-primary text-primary"
                         )}
                       >
                         {val.isPrivate ? "Private" : "Public"}

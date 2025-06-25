@@ -1,10 +1,10 @@
 import { Button, Input } from "@/shared/ui";
 import { FC, useEffect, useRef, useState } from "react";
 import { useChat } from "../model/useChat";
-import MessageCard from "../../../entities/message/ui/Message";
 import ChatHeader from "./ChatHeader";
 import useMessageStore from "@/entities/message/model/store";
 import clsx from "clsx";
+import MessageCard from "@/entities/message/ui/Message";
 
 interface ChatProps {
   roomId: string;
@@ -50,7 +50,7 @@ const Chat: FC<ChatProps> = ({
   };
 
   return (
-    <div className="w-80">
+    <div className="w-full">
       <ChatHeader setIsChatVisible={setIsChatVisible} />
       <div
         ref={chatContainerRef}
@@ -81,6 +81,7 @@ const Chat: FC<ChatProps> = ({
       </div>
       <div className="flex justify-start pt-3 gap-5 items-center px-2 fixed bottom-0 w-full">
         <Input
+          className="flex-1"
           onKeyDown={handleKeyDown}
           onChange={(event) => {
             setMessageValue(event.target.value);
@@ -88,9 +89,10 @@ const Chat: FC<ChatProps> = ({
           }}
           value={messageValue}
           placeholder="Send a message"
+          containerClassName="flex-1"
           fullWidth
         />
-        <Button onClick={handleSendMessage}>Send</Button>
+        <Button className="flex-0" onClick={handleSendMessage}>Send</Button>
       </div>
     </div>
   );

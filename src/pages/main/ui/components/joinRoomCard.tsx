@@ -1,8 +1,8 @@
-import JoinRoomModal from "@/features/join-room/ui/joinRoomModal";
+import JoinRoomModal from "@/features/room/join-room/ui/joinRoomModal";
 import Button from "@/shared/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/Card";
 import Input from "@/shared/ui/Input";
-import { FC, RefObject, useRef, useState } from "react";
+import { FC, useRef, useState } from "react";
 
 interface JoinRoomCardProps {
   handleModalOpen: (value: boolean) => void;
@@ -18,14 +18,14 @@ const JoinRoomCard: FC<JoinRoomCardProps> = ({ handleModalOpen }) => {
         <CardHeader>
           <CardTitle>Join with a room code</CardTitle>
         </CardHeader>
-        <CardContent className="flex gap-5 items-center">
+        <CardContent className="flex gap-5 items-center flex-wrap justify-center">
           <Input ref={inputRef} fullWidth placeholder="Enter room code" />
           <Button
             onClick={() => {
               handleModalOpen(true);
               console.log(inputRef.current?.value);
             }}
-            className="flex-none"
+            className="flex-1"
           >
             Go
           </Button>

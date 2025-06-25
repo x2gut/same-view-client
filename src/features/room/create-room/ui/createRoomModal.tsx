@@ -1,8 +1,8 @@
-import useCreateRoom from "@/features/create-room/model/useCreateRoom";
 import { Button, Input, Switch } from "@/shared/ui";
 import Modal, { ModalBody, ModalFooter, ModalHeader } from "@/shared/ui/modal";
 import { useState } from "react";
 import { Form } from "react-router-dom";
+import useCreateRoom from "../model/useCreateRoom";
 
 interface CreateRoomModalProps {
   isOpen: boolean;

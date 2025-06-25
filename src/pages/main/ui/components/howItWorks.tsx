@@ -1,11 +1,15 @@
-import { Play, Users, Lock } from "lucide-react";
+import { Play, Users, Lock, Rocket } from "lucide-react";
 import HowItWorksCard from "./howItWorksCard";
 
 const HowItWorks = () => {
   return (
-    <div className="text-center mt-10">
-      <h4 className="font-medium text-2xl mb-10">Features</h4>
-      <div className="flex gap-4">
+    <div className="text-center mt-10 mx-auto">
+      <div className="mb-10 flex items-center gap-3 justify-center">
+        <Rocket />
+
+        <h4 className="font-medium text-2xl">Features</h4>
+      </div>
+      <div className="flex gap-4 flex-wrap items-center justify-center">
         <HowItWorksCard
           title={<Play />}
           label="Sync view"
