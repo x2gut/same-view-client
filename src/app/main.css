@@ -83,3 +83,7 @@ body {
 .ytp-watermark {
   display: none !important;
 }
+
+.chat-scrollbar {
+  scrollbar-color: var(--accent) transparent;
+}

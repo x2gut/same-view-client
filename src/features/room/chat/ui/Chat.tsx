@@ -50,16 +50,15 @@ const Chat: FC<ChatProps> = ({
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full h-[920px] max-lg:h-[410px]">
       <ChatHeader setIsChatVisible={setIsChatVisible} />
       <div
         ref={chatContainerRef}
         style={{
-          maxHeight: "calc(100vh - 220px)",
+          maxHeight: "calc(100% - 180px)",
           scrollbarWidth: "thin",
-          scrollbarColor: "#CBD5E1 #F1F5F9",
         }}
-        className="px-5 py-4 overflow-y-auto reflex-grow scroll-smooth w-full"
+        className="px-5 py-4 overflow-y-auto reflex-grow scroll-smooth w-full scrol chat-scrollbar"
       >
         {userMessages && userMessages.length > 0 ? (
           userMessages.map((message, index) => (
