@@ -18,7 +18,7 @@ const Chat: FC<ChatProps> = ({
   setIsChatVisible,
 }) => {
   const [messageValue, setMessageValue] = useState("");
-  const { userMessages } = useMessageStore();
+  const { userMessages, systemMessages } = useMessageStore();
   const { sendMessage, handleUserTyping } = useChat({ roomId, username });
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
@@ -60,9 +60,13 @@ const Chat: FC<ChatProps> = ({
         }}
         className="px-5 py-4 overflow-y-auto reflex-grow scroll-smooth w-full scrol chat-scrollbar"
       >
-        {userMessages && userMessages.length > 0 ? (
-          userMessages.map((message, index) => (
-            <div key={index} className="px-2 mb-4 w-full overflow-x-hidden">
+        {systemMessages && systemMessages.length > 0 &&
+        systemMessages.map(message => (
+          <MessageCard key={message.timestamp} message={message.message} timestamp={message.timestamp} type="system"/>
+        ))}
+        {userMessages && userMessages.length > 0 && (
+          userMessages.map((message) => (
+            <div key={message.timestamp} className="px-2 mb-4 w-full overflow-x-hidden">
               <MessageCard
                 senderUsername={message.username}
                 username={username}
@@ -72,10 +76,6 @@ const Chat: FC<ChatProps> = ({
               />
             </div>
           ))
-        ) : (
-          <div className={clsx("py-10 text-center text-gray-500")}>
-            No messages yet. Start the conversation!
-          </div>
         )}
       </div>
       <div className="flex justify-start pt-3 gap-5 items-center px-2 fixed bottom-0 w-full">

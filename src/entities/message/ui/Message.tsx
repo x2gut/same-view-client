@@ -7,17 +7,13 @@ const MessageCard = (props: MessageCardProps) => {
   if (props.type === "system") {
     const { message, timestamp } = props;
     return (
-      <div
-        className={`p-4 mb-3 rounded-lg shadow-sm hover:shadow transition-shadow duration-200`}
-      >
-        <div className="flex items-start justify-between mb-2">
-          <div className="flex items-center gap-4">
-            <Bell size={15} strokeWidth={1.75} />
-            <p className={`font-semibold`}>System</p>
-          </div>
-          <p className="text-xs text-gray-400">{formatDuration(timestamp)}</p>
+      <div className="w-full mb-3 flex justify-center">
+        <div className="flex items-center gap-2 text-xs text-gray-500">
+          <Bell size={12} strokeWidth={1.5} />
+          <span>{message}</span>
+          <span className="text-gray-400">•</span>
+          <span className="text-gray-400">{formatDuration(timestamp)}</span>
         </div>
-        <p className={`leading-relaxed mb-1`}>{message}</p>
       </div>
     );
   } else {

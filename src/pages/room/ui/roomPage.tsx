@@ -11,7 +11,6 @@ import useMessageStore from "@/entities/message/model/store";
 import useChangeVideo from "@/features/room/changeVIdeo/model/useChangeVideo";
 import ChangeVideoInput from "@/features/room/changeVIdeo/ui";
 import Chat from "@/features/room/chat/ui/Chat";
-import SystemMeessages from "@/features/room/systemMessages/ui/SystemMeessages";
 
 const RoomPage = () => {
   const { isChatVisible, toggleChatVisible } = useChatStore();
@@ -42,7 +41,6 @@ const RoomPage = () => {
               changeVideo={changeVideo}
             />
           </div>
-          <SystemMeessages />
 
           {!isChatVisible && (
             <div
