@@ -18,11 +18,11 @@ const PauseButton = ({
       {isVideoPaused ? (
         <Play
           onClick={handleResume}
-          className="w-7 h-7 p-1 hover:bg-amber-50/10 rounded-lg duration-200 cursor-pointer"
+          className="w-8 h-8 p-1 hover:bg-amber-50/10 rounded-lg duration-200 cursor-pointer"
         />
       ) : (
-        <Pause
-          className="w-7 h-7 p-1 hover:bg-amber-50/10 rounded-lg duration-200 cursor-pointer"
+        <Pause  
+          className="w-8 h-8 p-1 hover:bg-amber-50/10 rounded-lg duration-200 cursor-pointer"
           onClick={handlePause}
         />
       )}
