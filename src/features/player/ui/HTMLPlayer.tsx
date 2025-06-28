@@ -7,6 +7,7 @@ import { PauseButton, PlayerProgressBar, Volume } from "./components";
 import usePlayer from "../model/hooks/usePlayer";
 import { HTMLPlayerAdapter } from "@/entities/player/model/adapters/htmlPlayerAdapter";
 import FullscreenButton from "./components/fullscreenButton";
+import { useThrottle } from "@/shared/hooks/useThrottle";
 
 const HtmlPlayer = ({
   src,
@@ -31,6 +32,7 @@ const HtmlPlayer = ({
   const [isHovered, setIsHovered] = useState(false);
   const [shouldShowCenterIcon, setShouldShowCenterIcon] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const hoverTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleVideoReady = () => {
     if (!playerRef.current) {
@@ -40,6 +42,20 @@ const HtmlPlayer = ({
     setHtmlPlayerAdapter(adapter);
     onVideoReady();
   };
+
+  const handleMouseMove = useThrottle(() => {
+    setIsHovered(true);
+
+    if (hoverTimerRef.current) {
+      clearTimeout(hoverTimerRef.current);
+    }
+
+    const timeout = setTimeout(() => {
+      setIsHovered(false);
+    }, 3500);
+
+    hoverTimerRef.current = timeout;
+  }, 200);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -105,8 +121,11 @@ const HtmlPlayer = ({
       <div
         className="absolute inset-0 z-10"
         onClick={handleClickOnPlayer}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={() => {
+          setIsHovered(false);
+          clearTimeout(hoverTimerRef.current);
+        }}
       />
       <div
         className={`absolute inset-x-0 bottom-0 z-20 transition-transform duration-300 ease-out ${
