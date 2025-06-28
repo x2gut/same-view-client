@@ -1,7 +1,7 @@
 import { useState } from "react";
-import UsersListDropdown from "./UsersListDropdown";
 import { ArrowRightFromLine, Users } from "lucide-react";
 import useChatStore from "@/entities/chat/store";
+import UsersListDropdown from "./UsersListDropdown";
 
 const ChatHeader = ({
   setIsChatVisible,
@@ -51,7 +51,10 @@ const ChatHeader = ({
   return (
     <div className="relative border-b border-accent">
       <div className="flex justify-between items-center px-2">
-        <button onClick={() => setIsChatVisible(false)} className="p-1 hover:bg-active/30 duration-200 cursor-pointer rounded-md">
+        <button
+          onClick={() => setIsChatVisible(false)}
+          className="p-1 hover:bg-active/30 duration-200 cursor-pointer rounded-md"
+        >
           <ArrowRightFromLine size={24} />
         </button>
         <h2 className="block px-5 py-5 text-lg font-medium">Chat</h2>

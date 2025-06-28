@@ -24,4 +24,4 @@ export interface Player {
   isPlayerReady: () => boolean;
 }
 
-export type PlayersType = "youtube" | "html"
+export type PlayersType = "youtube" | "html";

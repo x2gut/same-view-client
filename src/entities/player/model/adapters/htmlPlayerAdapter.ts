@@ -1,6 +1,6 @@
 import { Player, PlayerState } from "../types";
 
-export class HTMLPlayerAdapter implements Partial<Player> {
+export class HTMLPlayerAdapter implements Player {
   constructor(private player: HTMLVideoElement) {
     if (!player) {
       throw new Error("Player must be initialized first!");

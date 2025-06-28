@@ -7,6 +7,7 @@ import { formatTime } from "@/shared/lib/formatTime";
 import { PauseButton, PlayerProgressBar, Volume } from "./components";
 import { YoutubePlayerAdapter } from "@/entities/player/model/adapters/youtubePlayerAdapter";
 import usePlayer from "../model/hooks/usePlayer";
+import FullscreenButton from "./components/fullscreenButton";
 
 const YoutubePlayer = ({
   src,
@@ -26,9 +27,11 @@ const YoutubePlayer = ({
     handlePause,
     handlePlay,
     handleChangeVolume,
+    handleFullscreen,
   } = usePlayer(youtubePlayerAdapter);
   const [isHovered, setIsHovered] = useState(false);
   const [shouldShowCenterIcon, setShouldShowCenterIcon] = useState(false);
+  const youtubeContainerRef = useRef<HTMLDivElement | null>(null);
 
   const handleVideoReady = () => {
     if (!youtubePlayerControls.current) {
@@ -76,11 +79,11 @@ const YoutubePlayer = ({
   }, [isPaused]);
 
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-full z-0" ref={youtubeContainerRef}>
       <YoutubeFrame
         hideControls
         ref={youtubePlayerControls}
-        containerClassNames="w-full h-full"
+        containerClassNames="absolute w-full h-full z-0"
         src={src}
         onVideoReady={handleVideoReady}
       />
@@ -102,13 +105,13 @@ const YoutubePlayer = ({
         )}
       </AnimatePresence>
       <div
-        className="absolute inset-0 z-10"
+        className="absolute inset-0"
         onClick={handleClickOnPlayer}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       />
       <div
-        className={`absolute inset-x-0 bottom-0 z-20 transition-transform duration-300 ease-out ${
+        className={`absolute inset-x-0 bottom-0 transition-transform duration-300 ease-out z-[9998] ${
           isHovered ? "translate-y-0" : "translate-y-full"
         }`}
         onMouseEnter={() => setIsHovered(true)}
@@ -134,6 +137,13 @@ const YoutubePlayer = ({
               )}`}</span>
             </div>
             <Volume changeVolume={handleChangeVolume} />
+            <div className="ml-auto">
+              <FullscreenButton
+                toggleFullscreen={() => {
+                  handleFullscreen(youtubeContainerRef);
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>

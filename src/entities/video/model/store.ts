@@ -12,6 +12,8 @@ interface VideoStore {
   setIsPaused: (value: boolean) => void;
   isLoading: boolean;
   setIsLoading: (value: boolean) => void;
+  isFullscreen: boolean;
+  toggleFullscreen: () => void;
 }
 
 export const useVideoStore = create<VideoStore>()(
@@ -21,6 +23,9 @@ export const useVideoStore = create<VideoStore>()(
       setTimecode: (timecode) => {
         set({ timecode });
       },
+      isFullscreen: document.fullscreenElement ? true : false,
+      toggleFullscreen: () =>
+        set((state) => ({ isFullscreen: !state.isFullscreen })),
       currentVideoUrl: "",
       setVideoUrl: (url) => set({ currentVideoUrl: url }),
       totalDuration: 0,

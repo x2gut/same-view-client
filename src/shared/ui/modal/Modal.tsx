@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { KeyboardEvent, PropsWithChildren, useEffect } from "react";
+import { PropsWithChildren, useEffect } from "react";
 import { createPortal } from "react-dom";
 
 interface ModalProps extends PropsWithChildren {

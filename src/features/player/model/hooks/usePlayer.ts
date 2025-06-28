@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { RefObject, useEffect } from "react";
 import useRoomStore from "@/entities/room/model/roomStore";
 import { useUserStore } from "@/entities/user/model/userStore";
 import usePlayerSocketEvents from "./usePlayerSocketEvents";
@@ -13,12 +13,19 @@ import { Player, PlayerState } from "@/entities/player/model/types";
 const usePlayer = (player: Player) => {
   const { roomId } = useRoomStore();
   const { username } = useUserStore();
-  const { setTotalDuration, setTimecode, setIsPaused, setIsLoading } =
-    useVideoStore();
+  const {
+    setTotalDuration,
+    setTimecode,
+    setIsPaused,
+    setIsLoading,
+    isPaused,
+    isFullscreen,
+    toggleFullscreen,
+  } = useVideoStore();
   usePlayerSocketEvents(player);
 
   useEffect(() => {
-    if (!player) return;
+    if (!player || isPaused) return;
 
     const interval = setInterval(() => {
       const currentTime = player?.getCurrentTime();
@@ -30,11 +37,18 @@ const usePlayer = (player: Player) => {
     setTotalDuration(player.getDuration());
 
     return () => clearInterval(interval);
-  }, [player]);
+  }, [player, isPaused]);
 
   const handlePause = () => {
     emitPauseVideo(roomId, username);
     setIsPaused(true);
+  };
+
+  const handleFullscreen = (containerRef: RefObject<HTMLDivElement>) => {
+    toggleFullscreen();
+    isFullscreen
+      ? document.exitFullscreen()
+      : containerRef.current?.requestFullscreen();
   };
 
   const handlePlay = () => {
@@ -70,6 +84,7 @@ const usePlayer = (player: Player) => {
     handleSeek,
     handleClickOnPlayer,
     handleChangeVolume,
+    handleFullscreen,
   };
 };
 

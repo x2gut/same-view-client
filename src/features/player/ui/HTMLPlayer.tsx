@@ -6,6 +6,7 @@ import { formatTime } from "@/shared/lib/formatTime";
 import { PauseButton, PlayerProgressBar, Volume } from "./components";
 import usePlayer from "../model/hooks/usePlayer";
 import { HTMLPlayerAdapter } from "@/entities/player/model/adapters/htmlPlayerAdapter";
+import FullscreenButton from "./components/fullscreenButton";
 
 const HtmlPlayer = ({
   src,
@@ -25,9 +26,11 @@ const HtmlPlayer = ({
     handlePause,
     handlePlay,
     handleChangeVolume,
+    handleFullscreen,
   } = usePlayer(htmlPlayerAdapter);
   const [isHovered, setIsHovered] = useState(false);
   const [shouldShowCenterIcon, setShouldShowCenterIcon] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const handleVideoReady = () => {
     if (!playerRef.current) {
@@ -75,7 +78,7 @@ const HtmlPlayer = ({
   }, [isPaused]);
 
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-full" ref={containerRef}>
       <video
         className="w-full h-full"
         ref={playerRef}
@@ -132,6 +135,13 @@ const HtmlPlayer = ({
               )}`}</span>
             </div>
             <Volume changeVolume={handleChangeVolume} />
+            <div className="ml-auto">
+              <FullscreenButton
+                toggleFullscreen={() => {
+                  handleFullscreen(containerRef);
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>
