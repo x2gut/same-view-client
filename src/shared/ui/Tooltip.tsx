@@ -13,7 +13,7 @@ const Tooltip = ({ className, style, children, content }: TooltipProps) => {
 
   return (
     <div
-      className="w-full relative"
+      className="w-full relative select-none"
       onMouseEnter={() => setIsVisible(true)}
       onMouseLeave={() => setIsVisible(false)}
     >
