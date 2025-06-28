@@ -1,4 +1,4 @@
-export function formatTime(seconds: number): string {
+function formatTime(seconds: number): string {
   const totalSeconds = Math.floor(seconds);
 
   const hrs = Math.floor(totalSeconds / 3600);
@@ -13,3 +13,5 @@ export function formatTime(seconds: number): string {
     return `${twoDigits(mins)}:${twoDigits(secs)}`;
   }
 }
+
+export default formatTime

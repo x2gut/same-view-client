@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { RoomJoined } from "@/entities/room/model/type";
 import { BaseApiError } from "@/shared/api/rest/exceptions/base-exception";
 import toast from "react-hot-toast";
-import { buildRoute } from "@/shared/lib/buildRoute";
 import { useUserStore } from "@/entities/user/model/userStore";
 import { useVideoStore } from "@/entities/video/model/store";
 import { chatSocket, videoSocket } from "@/shared/api/socket/socket";
+import buildRoute from "@/shared/lib/buildRoute";
 
 const useJoinRoom = () => {
   const { handleSubmit, register, reset } = useForm();

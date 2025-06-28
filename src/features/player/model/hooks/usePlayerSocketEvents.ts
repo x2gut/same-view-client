@@ -5,7 +5,7 @@ import { VideoEvents } from "@/entities/video/model/events";
 import { useVideoStore } from "@/entities/video/model/store";
 import { RoomVideo } from "@/entities/video/model/types";
 import { videoSocket } from "@/shared/api/socket/socket";
-import { formatTime } from "@/shared/lib/formatTime";
+import formatTime from "@/shared/lib/formatTime";
 import { useEffect, useRef } from "react";
 
 const usePlayerSocketEvents = (player: Player) => {

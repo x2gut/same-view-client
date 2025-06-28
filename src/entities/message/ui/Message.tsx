@@ -1,7 +1,7 @@
 import { Avatar } from "@/shared/ui";
 import { MessageCardProps } from "../model/type";
-import { formatDuration } from "@/shared/lib/formatDuration";
 import { Bell } from "lucide-react";
+import formatDuration from "@/shared/lib/formatDuration";
 
 const MessageCard = (props: MessageCardProps) => {
   if (props.type === "system") {

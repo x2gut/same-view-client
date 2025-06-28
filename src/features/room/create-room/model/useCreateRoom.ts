@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { createRoomRequest } from "../api/rest/createRoom";
-import { buildRoute } from "@/shared/lib/buildRoute";
 import { useUserStore } from "@/entities/user/model/userStore";
 import { RoomLocalStorage } from "@/entities/room/model/type";
+import buildRoute from "@/shared/lib/buildRoute";
 
 interface CreateRoomForm {
   roomName: string;

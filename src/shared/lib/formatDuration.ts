@@ -1,4 +1,4 @@
-export const formatDuration = (dateStr: string) => {
+const formatDuration = (dateStr: string) => {
   const date = new Date(dateStr);
   const now = new Date();
   const diff = now.getTime() - date.getTime();
@@ -24,3 +24,5 @@ export const formatDuration = (dateStr: string) => {
     return years === 1 ? "1y ago" : `${years}y ago`;
   }
 };
+
+export default formatDuration

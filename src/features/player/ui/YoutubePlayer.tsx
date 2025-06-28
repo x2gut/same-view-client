@@ -3,11 +3,11 @@ import { YoutubeControls, YoutubeFrame } from "react-youtube-light";
 import { AnimatePresence, motion } from "framer-motion";
 import { Pause, Play } from "lucide-react";
 import { useVideoStore } from "@/entities/video/model/store";
-import { formatTime } from "@/shared/lib/formatTime";
 import { PauseButton, PlayerProgressBar, Volume } from "./components";
 import { YoutubePlayerAdapter } from "@/entities/player/model/adapters/youtubePlayerAdapter";
 import usePlayer from "../model/hooks/usePlayer";
 import FullscreenButton from "./components/fullscreenButton";
+import formatTime from "@/shared/lib/formatTime";
 
 const YoutubePlayer = ({
   src,
@@ -16,7 +16,7 @@ const YoutubePlayer = ({
   src: string;
   onVideoReady: () => void;
 }) => {
-  const { totalDuration, isPaused, timecode } = useVideoStore();
+  const { totalDuration, isPaused, timecode, setTimecode } = useVideoStore();
   const youtubePlayerControls = useRef<YoutubeControls>(null);
   const [youtubePlayerAdapter, setYoutubePlayerAdapter] =
     useState<YoutubePlayerAdapter | null>(null);
@@ -122,6 +122,7 @@ const YoutubePlayer = ({
             handleSeek={handleSeek}
             totalDuration={totalDuration}
             currentDuration={timecode}
+            setTimecode={setTimecode}
           />
           <div className="flex gap-20 items-center">
             <PauseButton

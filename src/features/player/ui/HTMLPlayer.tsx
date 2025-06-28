@@ -2,12 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Pause, Play } from "lucide-react";
 import { useVideoStore } from "@/entities/video/model/store";
-import { formatTime } from "@/shared/lib/formatTime";
 import { PauseButton, PlayerProgressBar, Volume } from "./components";
 import usePlayer from "../model/hooks/usePlayer";
 import { HTMLPlayerAdapter } from "@/entities/player/model/adapters/htmlPlayerAdapter";
 import FullscreenButton from "./components/fullscreenButton";
 import { useThrottle } from "@/shared/hooks/useThrottle";
+import formatTime from "@/shared/lib/formatTime";
 
 const HtmlPlayer = ({
   src,
