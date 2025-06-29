@@ -1,5 +1,5 @@
 import useRoomStore from "@/entities/room/model/roomStore";
-import { SettingOption } from "@/entities/room/model/type";
+import { RoomPermissions, SettingOption } from "@/entities/room/model/type";
 import {
   Crown,
   Pause,
@@ -8,9 +8,42 @@ import {
   SquarePlay,
   Users,
 } from "lucide-react";
+import { changeRoomPermissons } from "../api/socket/handlers/handlers";
+import { useUserStore } from "@/entities/user/model/userStore";
+import { useEffect } from "react";
+import { videoSocket } from "@/shared/api/socket/socket";
+import { VideoEvents } from "@/entities/video/model/events";
 
 export const useRoomSettings = () => {
-  const { setRoomPermission, roomPermissions } = useRoomStore();
+  const { username, isOwner } = useUserStore();
+  const { setRoomPermission, roomPermissions, roomId } = useRoomStore();
+
+  const handleChangeRoomPermission = <T extends keyof RoomPermissions>(
+    key: T,
+    value: RoomPermissions[T]
+  ) => {
+    if (!isOwner) return;
+    const newRoomPermission = {
+      ...roomPermissions,
+      [key]: value,
+    };
+    changeRoomPermissons(username, roomId, newRoomPermission);
+  };
+
+  useEffect(() => {
+    videoSocket.on(
+      VideoEvents.CHANGE_ROOM_PERMISSIONS,
+      (data: { hostName: string; permissions: RoomPermissions }) => {
+        Object.entries(data.permissions).forEach(([key, value]) => {
+          setRoomPermission(key as keyof RoomPermissions, value);
+        });
+      }
+    );
+
+    return () => {
+      videoSocket.off(VideoEvents.CHANGE_ROOM_PERMISSIONS);
+    };
+  }, []);
 
   const videoOptions: SettingOption[] = [
     {
@@ -68,7 +101,7 @@ export const useRoomSettings = () => {
 
   return {
     roomPermissions,
-    setRoomPermission,
+    handleChangeRoomPermission,
     videoOptions,
     playbackOptions,
     getVideoSectionIcon,

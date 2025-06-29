@@ -5,4 +5,5 @@ export enum VideoEvents {
   VIDEO_PAUSED = "video_paused",
   VIDEO_RESUMED = "video_resumed",
   VIDEO_SEEKED = "video_seeked",
+  CHANGE_ROOM_PERMISSIONS = "change_room_permissions",
 }

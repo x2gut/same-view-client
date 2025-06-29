@@ -31,11 +31,13 @@ const RoomHeader = ({
         <CopyBadge name={roomKey} />
       </div>
       <div className="flex gap-5 items-center">
-        <RoomSettingsBtn
-          onClick={() => {
-            setIsModalOpen(true);
-          }}
-        />
+        {isOwner && (
+          <RoomSettingsBtn
+            onClick={() => {
+              setIsModalOpen(true);
+            }}
+          />
+        )}
         <ThemeSwitcher />
         <Badge
           icon={

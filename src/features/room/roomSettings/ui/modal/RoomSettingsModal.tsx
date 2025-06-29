@@ -11,7 +11,7 @@ interface RoomSettingsModalProps {
 const RoomSettingsModal = ({ isOpen, onClose }: RoomSettingsModalProps) => {
   const {
     roomPermissions,
-    setRoomPermission,
+    handleChangeRoomPermission,
     videoOptions,
     playbackOptions,
     getVideoSectionIcon,
@@ -41,7 +41,7 @@ const RoomSettingsModal = ({ isOpen, onClose }: RoomSettingsModalProps) => {
           description="Manage who can change the room's video"
           options={videoOptions}
           selectedValue={roomPermissions.video}
-          onSelectionChange={setRoomPermission}
+          onSelectionChange={handleChangeRoomPermission}
         />
         <SettingSection
           type="playback"
@@ -50,7 +50,7 @@ const RoomSettingsModal = ({ isOpen, onClose }: RoomSettingsModalProps) => {
           description="Manage who can pause, play, and seek the video"
           options={playbackOptions}
           selectedValue={roomPermissions.playback}
-          onSelectionChange={setRoomPermission}
+          onSelectionChange={handleChangeRoomPermission}
         />
       </ModalBody>
     </Modal>

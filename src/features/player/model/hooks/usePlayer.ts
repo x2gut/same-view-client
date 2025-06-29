@@ -9,10 +9,11 @@ import {
   emitSeekTo,
 } from "../../api/socket/handlers";
 import { Player, PlayerState } from "@/entities/player/model/types";
+import checkPermissions from "@/shared/lib/checkPermissions";
 
 const usePlayer = (player: Player) => {
-  const { roomId } = useRoomStore();
-  const { username } = useUserStore();
+  const { roomId, roomPermissions } = useRoomStore();
+  const { username, isOwner } = useUserStore();
   const {
     setTotalDuration,
     setTimecode,
@@ -40,6 +41,8 @@ const usePlayer = (player: Player) => {
   }, [player, isPaused]);
 
   const handlePause = () => {
+    if (!checkPermissions(isOwner, roomPermissions.playback)) return;
+
     emitPauseVideo(roomId, username);
     setIsPaused(true);
   };
@@ -52,18 +55,22 @@ const usePlayer = (player: Player) => {
   };
 
   const handlePlay = () => {
+    if (!checkPermissions(isOwner, roomPermissions.playback)) return;
+
     emitResumeVideo(roomId, username);
     setIsPaused(false);
   };
 
   const handleSeek = (seconds: number, emitToServer: boolean = true) => {
+    if (!checkPermissions(isOwner, roomPermissions.playback)) return;
+
     setIsLoading(true);
 
     if (emitToServer) {
       emitSeekTo(roomId, seconds, username);
       return;
     }
-    
+
     player.seekTo(seconds);
   };
 

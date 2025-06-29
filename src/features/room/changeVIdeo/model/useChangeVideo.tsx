@@ -6,9 +6,14 @@ import { setVideo } from "../api/socket/handlers";
 import { videoSocket } from "@/shared/api/socket/socket";
 import { useVideoStore } from "@/entities/video/model/store";
 import { VideoEvents } from "@/entities/video/model/events";
+import { useUserStore } from "@/entities/user/model/userStore";
+import useRoomStore from "@/entities/room/model/roomStore";
+import checkPermissions from "@/shared/lib/checkPermissions";
 
 const useChangeVideo = () => {
   const { addMessage } = useMessageStore();
+  const { isOwner } = useUserStore();
+  const { roomPermissions } = useRoomStore();
   const { setVideoUrl, setTimecode } = useVideoStore();
 
   const changeVideo = (
@@ -17,8 +22,8 @@ const useChangeVideo = () => {
     username: string
   ) => {
     if (!videoUrl) return;
-
-    setVideoUrl(videoUrl);
+    if (!checkPermissions(isOwner, roomPermissions.video)) return 
+      setVideoUrl(videoUrl);
 
     //REST
     changeVideoUrl(roomId, videoUrl, username);
