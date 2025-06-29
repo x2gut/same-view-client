@@ -8,7 +8,7 @@ import { FC, useRef, useState } from "react";
 interface ProgressBarProps {
   totalDuration: number;
   currentDuration?: number;
-  handleSeek?: (seconds: number) => void;
+  handleSeek?: (seconds: number, emitToServer: boolean) => void;
   setTimecode: (value: number) => void;
 }
 
@@ -34,13 +34,15 @@ const PlayerProgressBar: FC<ProgressBarProps> = ({
   const {} = useDrag(progressBarRef, {
     onDrag: (event) => {
       const percent = getBoundaryClientPercent(progressBarRef, event.clientX);
+      const time = totalDuration * (dragPercent / 100);
       setDragPercent(percent);
+      handleSeek(time, false);
     },
     onPointerUp: () => {
       if (handleSeek && dragPercent !== null) {
         const time = totalDuration * (dragPercent / 100);
-        setTimecode(time)
-        handleSeek(time);
+        setTimecode(time);
+        handleSeek(time, true);
       }
       setDragPercent(null);
     },
@@ -56,7 +58,7 @@ const PlayerProgressBar: FC<ProgressBarProps> = ({
     if (!handleSeek) return;
     const percent = getBoundaryClientPercent(progressBarRef, event.clientX);
     const time = totalDuration * (percent / 100);
-    handleSeek(time);
+    handleSeek(time, true);
   };
 
   const progressPercent =

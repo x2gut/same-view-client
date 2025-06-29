@@ -61,10 +61,10 @@ const RoomPage = () => {
 
           <div
             className={clsx(
-              "overflow-hidden rounded-lg shadow transition-all duration-500 ease-in-out h-full max-lg:max-h-[360px] min-w-[360px]",
+              "overflow-hidden rounded-lg shadow h-full max-lg:max-h-[360px] min-w-[360px]",
               isChatVisible
-                ? "max-sm:max-w-[360px] opacity-100 translate-x-0 pointer-events-auto"
-                : "max-w-0 opacity-0 translate-x-full pointer-events-none max-lg:hidden"
+                ? "translate-x-0 pointer-events-auto"
+                : "pointer-events-none hidden"
             )}
           >
             <Chat

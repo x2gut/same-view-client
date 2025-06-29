@@ -56,9 +56,15 @@ const usePlayer = (player: Player) => {
     setIsPaused(false);
   };
 
-  const handleSeek = (seconds: number) => {
+  const handleSeek = (seconds: number, emitToServer: boolean = true) => {
     setIsLoading(true);
-    emitSeekTo(roomId, seconds, username);
+
+    if (emitToServer) {
+      emitSeekTo(roomId, seconds, username);
+      return;
+    }
+    
+    player.seekTo(seconds);
   };
 
   const handleChangeVolume = (value: number) => {

@@ -7,7 +7,6 @@ import {
   buttonVariants,
   containerVariants,
   itemVariants,
-  titleVariants,
 } from "@/shared/ui/animations";
 
 const AboutPage = () => {

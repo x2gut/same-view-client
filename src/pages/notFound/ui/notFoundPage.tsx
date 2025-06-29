@@ -9,7 +9,7 @@ import {
 import { Home, Search, Rocket, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const Page404 = () => {
+const NotFoundPage = () => {
   const navigate = useNavigate();
 
   const handleHomeClick = () => {
@@ -98,4 +98,4 @@ const Page404 = () => {
   );
 };
 
-export default Page404;
+export default NotFoundPage;

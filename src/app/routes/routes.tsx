@@ -1,7 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
-import { MainPage, Page404, RoomPage } from "@/pages";
 import { ROUTES } from "../../shared/routes/consts";
-import AboutPage from "@/pages/about/ui/aboutPage";
+import {
+  AboutPage,
+  MainPage,
+  NotFoundPage,
+  RoomPage,
+  TermsPage,
+} from "@/pages";
 
 const routes = createBrowserRouter([
   {
@@ -13,12 +18,16 @@ const routes = createBrowserRouter([
     path: ROUTES.ROOM,
   },
   {
-    element: <Page404 />,
+    element: <NotFoundPage />,
     path: "*",
   },
   {
     element: <AboutPage />,
     path: ROUTES.ABOUT,
+  },
+  {
+    element: <TermsPage />,
+    path: ROUTES.TERMS,
   },
 ]);
 
