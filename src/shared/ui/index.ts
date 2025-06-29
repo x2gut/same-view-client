@@ -9,4 +9,3 @@ export { default as CopyBadge } from "./CopyBadge";
 export { default as Avatar } from "./Avatar";
 export { default as ProgressBar } from "./ProgressBar";
 export { default as Tooltip } from "./Tooltip";
-export {default as RadioButton} from "./radioButton"
