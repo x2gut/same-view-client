@@ -16,7 +16,7 @@ const ModalHeader = ({
   <div
     className={`flex justify-between items-center p-4 border-b border-accent ${className}`}
   >
-    <h2 className="font-semibold text-2xl">{children}</h2>
+    {children}
     {showCloseButton && onClose && (
       <button
         onClick={onClose}

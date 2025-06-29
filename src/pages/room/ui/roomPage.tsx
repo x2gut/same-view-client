@@ -18,7 +18,7 @@ const RoomPage = () => {
   const params = useParams();
   const { changeVideo } = useChangeVideo();
   const { hasNewMessages, setHasNewMessages } = useMessageStore();
-  const { username } = useUserStore();
+  const { username, isOwner } = useUserStore();
   const { currentVideoUrl } = useVideoStore();
 
   const { roomName, roomKey } = location.state || {};
@@ -30,7 +30,7 @@ const RoomPage = () => {
 
   return (
     <div className="flex flex-col w-full h-screen overflow-hidden">
-      <RoomHeader roomKey={roomKey} roomName={roomName} hostName={username} />
+      <RoomHeader isOwner={isOwner} roomKey={roomKey} roomName={roomName} hostName={username} />
       <div className="flex-1 overflow-hidden p-2">
         <div className="h-full lg:grid lg:grid-cols-[minmax(0,1fr)_auto_auto] lg:gap-2 flex flex-col gap-2">
           <div className="flex flex-col w-full flex-1 overflow-hidden rounded-lg shadow">

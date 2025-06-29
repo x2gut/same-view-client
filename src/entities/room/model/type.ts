@@ -1,4 +1,5 @@
 export interface Room {
+  isOwner: boolean;
   roomId: string;
   roomName: string;
   hostName: string;
@@ -25,3 +26,17 @@ export type RoomLocalStorage = Pick<
   Room,
   "roomId" | "roomName" | "roomKey" | "isPrivate" | "createdAt"
 >;
+
+export type RoomPermissions = {
+  video: "host" | "all";
+  playback: "host" | "all";
+};
+
+export interface SettingOption {
+  id: string;
+  label: string;
+  icon: any;
+  iconColor: string;
+  description: string;
+  recommended: boolean;
+}

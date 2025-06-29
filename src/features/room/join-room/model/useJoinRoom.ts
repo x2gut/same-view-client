@@ -11,7 +11,7 @@ import buildRoute from "@/shared/lib/buildRoute";
 
 const useJoinRoom = () => {
   const { handleSubmit, register, reset } = useForm();
-  const { setUsername } = useUserStore();
+  const { setUsername, setIsOwner } = useUserStore();
   const { setVideoUrl } = useVideoStore();
   const navigate = useNavigate();
 
@@ -39,6 +39,7 @@ const useJoinRoom = () => {
       });
 
       setUsername(username);
+      setIsOwner(roomData.data.isOwner);
       setVideoUrl(roomData.data.video.url);
 
       return roomData;

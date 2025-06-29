@@ -4,6 +4,7 @@ import { createRoomRequest } from "../api/rest/createRoom";
 import { useUserStore } from "@/entities/user/model/userStore";
 import { RoomLocalStorage } from "@/entities/room/model/type";
 import buildRoute from "@/shared/lib/buildRoute";
+import saveRoomToLocalStorage from "../lib/saveRoomToLocalStorage";
 
 interface CreateRoomForm {
   roomName: string;
@@ -13,7 +14,7 @@ interface CreateRoomForm {
 
 const useCreateRoom = () => {
   const navigate = useNavigate();
-  const { setUsername } = useUserStore();
+  const { setUsername, setIsOwner } = useUserStore();
   const {
     handleSubmit,
     formState: { errors },
@@ -31,6 +32,7 @@ const useCreateRoom = () => {
   }) => {
     const roomData = await createRoomRequest(roomName, username, password);
     setUsername(username);
+    setIsOwner(roomData.data.isOwner);
 
     navigate(buildRoute(String(roomData.data.roomId)), {
       state: {
@@ -47,15 +49,7 @@ const useCreateRoom = () => {
       createdAt: roomData.data.createdAt,
     };
 
-    const rooms: Array<RoomLocalStorage> =
-      JSON.parse(localStorage.getItem("rooms")) || [];
-
-    if (rooms.length >= 3) {
-      rooms.shift()
-    }
-
-    rooms.push(roomDataToSave);
-    localStorage.setItem("rooms", JSON.stringify(rooms));
+    saveRoomToLocalStorage(roomDataToSave);
   };
 
   return { createRoom, handleSubmit, register, errors };

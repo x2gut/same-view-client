@@ -16,6 +16,7 @@ const Chat: FC<ChatProps> = ({ roomId, username, setIsChatVisible }) => {
   const { userMessages, systemMessages } = useMessageStore();
   const { sendMessage, handleUserTyping } = useChat({ roomId, username });
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  
   const commonMessages = [...userMessages, ...systemMessages].sort(
     (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
   );
