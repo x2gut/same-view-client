@@ -40,7 +40,6 @@ const OptionCard = ({
             >
               {option.label}
             </p>
-            <p className="text-muted text-sm">{option.description}</p>
           </div>
         </div>
         <div className="flex items-center gap-2">

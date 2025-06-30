@@ -47,7 +47,7 @@ export const useRoomSettings = () => {
 
   const videoOptions: SettingOption[] = [
     {
-      id: "host",
+      value: "host",
       label: "Only Host",
       icon: Crown,
       iconColor: "text-warning",
@@ -55,7 +55,7 @@ export const useRoomSettings = () => {
       recommended: true,
     },
     {
-      id: "all",
+      value: "all",
       label: "All Participants",
       icon: Users,
       iconColor: "text-blue-500",
@@ -66,7 +66,7 @@ export const useRoomSettings = () => {
 
   const playbackOptions: SettingOption[] = [
     {
-      id: "host",
+      value: "host",
       label: "Only Host",
       icon: Crown,
       iconColor: "text-warning",
@@ -74,7 +74,7 @@ export const useRoomSettings = () => {
       recommended: true,
     },
     {
-      id: "all",
+      value: "all",
       label: "All Participants",
       icon: Users,
       iconColor: "text-blue-500",

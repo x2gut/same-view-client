@@ -31,12 +31,11 @@ const SettingSection = ({
       <div className="space-y-2">
         {options.map((option) => (
           <OptionCard
-            key={option.id}
+            key={option.value}
             option={option}
-            isSelected={selectedValue === option.id}
+            isSelected={selectedValue === option.value}
             onSelect={() => {
-              console.log(type, option.id)
-              onSelectionChange(type, option.id);
+              onSelectionChange(type, option.value);
             }}
           />
         ))}

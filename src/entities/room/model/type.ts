@@ -1,3 +1,5 @@
+import { LucideIcon } from "lucide-react";
+
 export interface Room {
   isOwner: boolean;
   roomId: string;
@@ -33,9 +35,9 @@ export type RoomPermissions = {
 };
 
 export interface SettingOption {
-  id: string;
+  value: string;
   label: string;
-  icon: any;
+  icon: LucideIcon;
   iconColor: string;
   description: string;
   recommended: boolean;

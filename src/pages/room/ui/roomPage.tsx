@@ -11,6 +11,7 @@ import useMessageStore from "@/entities/message/model/store";
 import useChangeVideo from "@/features/room/changeVIdeo/model/useChangeVideo";
 import ChangeVideoInput from "@/features/room/changeVIdeo/ui";
 import Chat from "@/features/room/chat/ui/Chat";
+import FloatingReactions from "@/features/room/reactions/ui/FloatingReactions";
 
 const RoomPage = () => {
   const { isChatVisible, toggleChatVisible } = useChatStore();
@@ -29,19 +30,26 @@ const RoomPage = () => {
   }
 
   return (
-    <div className="flex flex-col w-full h-screen overflow-hidden">
-      <RoomHeader isOwner={isOwner} roomKey={roomKey} roomName={roomName} hostName={username} />
+    <div className="relative flex flex-col w-full h-screen overflow-hidden">
+      <RoomHeader
+        isOwner={isOwner}
+        roomKey={roomKey}
+        roomName={roomName}
+        hostName={username}
+      />
       <div className="flex-1 overflow-hidden p-2">
         <div className="h-full lg:grid lg:grid-cols-[minmax(0,1fr)_auto_auto] lg:gap-2 flex flex-col gap-2">
           <div className="flex flex-col w-full flex-1 overflow-hidden rounded-lg shadow">
-            <RoomVideoViewer videoLink={currentVideoUrl} roomId={params.id} />
+            <FloatingReactions>
+              <RoomVideoViewer videoLink={currentVideoUrl} roomId={params.id} />
+            </FloatingReactions>
+
             <ChangeVideoInput
               roomId={params.id}
               username={username}
               changeVideo={changeVideo}
             />
           </div>
-
           {!isChatVisible && (
             <div
               onClick={() => {

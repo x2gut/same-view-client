@@ -1,3 +1,4 @@
+import ReactionButton from "@/features/room/reactions/ui/ReactionButton";
 import RoomSettingsModal from "@/features/room/roomSettings/ui/modal/RoomSettingsModal";
 import RoomSettingsBtn from "@/features/room/roomSettings/ui/RoomSettingsButton";
 import ThemeSwitcher from "@/features/switch-theme/ui/themeSwitcher";
@@ -31,6 +32,7 @@ const RoomHeader = ({
         <CopyBadge name={roomKey} />
       </div>
       <div className="flex gap-5 items-center">
+        <ReactionButton />
         {isOwner && (
           <RoomSettingsBtn
             onClick={() => {
