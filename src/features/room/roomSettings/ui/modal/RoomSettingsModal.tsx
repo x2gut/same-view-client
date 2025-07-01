@@ -2,6 +2,7 @@ import Modal, { ModalBody, ModalHeader } from "@/shared/ui/modal";
 import { Shield } from "lucide-react";
 import { useRoomSettings } from "../../model/useRoomSettings";
 import SettingSection from "./components/SettingsSection";
+import { playbackOptions, reactionsOptions, videoOptions } from "../../model/consts";
 
 interface RoomSettingsModalProps {
   isOpen: boolean;
@@ -12,10 +13,9 @@ const RoomSettingsModal = ({ isOpen, onClose }: RoomSettingsModalProps) => {
   const {
     roomPermissions,
     handleChangeRoomPermission,
-    videoOptions,
-    playbackOptions,
     getVideoSectionIcon,
     getPlaybackSectionIcon,
+    getReactionsIcon,
   } = useRoomSettings();
 
   return (
@@ -50,6 +50,15 @@ const RoomSettingsModal = ({ isOpen, onClose }: RoomSettingsModalProps) => {
           description="Manage who can pause, play, and seek the video"
           options={playbackOptions}
           selectedValue={roomPermissions.playback}
+          onSelectionChange={handleChangeRoomPermission}
+        />
+        <SettingSection
+          type="reactions"
+          icon={getReactionsIcon()}
+          title="Reactions access"
+          description="Disable or enable access to reactions"
+          options={reactionsOptions}
+          selectedValue={String(roomPermissions.reactions)}
           onSelectionChange={handleChangeRoomPermission}
         />
       </ModalBody>

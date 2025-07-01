@@ -1,31 +1,23 @@
-import { useState, useRef, useEffect } from "react";
 import { Smile } from "lucide-react";
 import { Button } from "@/shared/ui";
-import useReactionStore from "@/entities/reaction/model/store";
 import { emojis } from "@/entities/reaction/model/emojis";
+import useReactions from "../model/useReactions";
+import { useEffect, useRef } from "react";
 
 const ReactionButton = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [recentEmojis, setRecentEmojis] = useState([]);
-  const { setReactions } = useReactionStore();
-  const dropdownRef = useRef(null);
+  const { isOpen, setIsOpen, recentEmojis, handleEmojiSelect } = useReactions();
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleEmojiSelect = (emoji: string) => {
-    setRecentEmojis((prev) => {
-      const filtered = prev.filter((e) => e !== emoji);
-      return [emoji, ...filtered].slice(0, 3);
-    });
-    setReactions(emoji);
-    setIsOpen(false);
-  };
-
   useEffect(() => {
     const handleClickOutside = (event: PointerEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };

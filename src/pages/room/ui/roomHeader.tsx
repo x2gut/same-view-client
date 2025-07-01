@@ -1,7 +1,9 @@
+import { RoomPermissions } from "@/entities/room/model/type";
 import ReactionButton from "@/features/room/reactions/ui/ReactionButton";
 import RoomSettingsModal from "@/features/room/roomSettings/ui/modal/RoomSettingsModal";
 import RoomSettingsBtn from "@/features/room/roomSettings/ui/RoomSettingsButton";
 import ThemeSwitcher from "@/features/switch-theme/ui/themeSwitcher";
+import checkPermissions from "@/shared/lib/checkPermissions";
 import { Button, CopyBadge } from "@/shared/ui";
 import Badge from "@/shared/ui/Badge";
 import { MoveLeft } from "lucide-react";
@@ -13,11 +15,13 @@ const RoomHeader = ({
   hostName,
   roomKey,
   isOwner,
+  roomPermissions,
 }: {
   roomName: string;
   hostName: string;
   roomKey: string;
   isOwner: boolean;
+  roomPermissions: RoomPermissions;
 }) => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,7 +36,7 @@ const RoomHeader = ({
         <CopyBadge name={roomKey} />
       </div>
       <div className="flex gap-5 items-center">
-        <ReactionButton />
+        {roomPermissions.reactions === "enabled" && <ReactionButton />}
         {isOwner && (
           <RoomSettingsBtn
             onClick={() => {

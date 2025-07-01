@@ -1,15 +1,18 @@
-import { SettingOption } from "@/entities/room/model/type";
+import { RoomPermissions, SettingOption } from "@/entities/room/model/type";
 import OptionCard from "./OptionCard";
 import SettingSectionHeader from "./SettingsSectionHeader";
 
 interface SettingSectionProps {
-  type: "video" | "playback";
+  type: keyof RoomPermissions;
   icon: React.ReactNode;
   title: string;
   description: string;
-  options: SettingOption[];
+  options: SettingOption<keyof RoomPermissions>[];
   selectedValue: string;
-  onSelectionChange: (key: string, value: string) => void;
+  onSelectionChange: (
+    key: keyof RoomPermissions,
+    value: RoomPermissions[keyof RoomPermissions]
+  ) => void;
 }
 
 const SettingSection = ({
@@ -31,7 +34,7 @@ const SettingSection = ({
       <div className="space-y-2">
         {options.map((option) => (
           <OptionCard
-            key={option.value}
+            key={option.label}
             option={option}
             isSelected={selectedValue === option.value}
             onSelect={() => {

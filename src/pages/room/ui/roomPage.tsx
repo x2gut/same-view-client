@@ -12,6 +12,7 @@ import useChangeVideo from "@/features/room/changeVIdeo/model/useChangeVideo";
 import ChangeVideoInput from "@/features/room/changeVIdeo/ui";
 import Chat from "@/features/room/chat/ui/Chat";
 import FloatingReactions from "@/features/room/reactions/ui/FloatingReactions";
+import useRoomStore from "@/entities/room/model/roomStore";
 
 const RoomPage = () => {
   const { isChatVisible, toggleChatVisible } = useChatStore();
@@ -21,6 +22,7 @@ const RoomPage = () => {
   const { hasNewMessages, setHasNewMessages } = useMessageStore();
   const { username, isOwner } = useUserStore();
   const { currentVideoUrl } = useVideoStore();
+  const { roomPermissions } = useRoomStore();
 
   const { roomName, roomKey } = location.state || {};
 
@@ -32,6 +34,7 @@ const RoomPage = () => {
   return (
     <div className="relative flex flex-col w-full h-screen overflow-hidden">
       <RoomHeader
+        roomPermissions={roomPermissions}
         isOwner={isOwner}
         roomKey={roomKey}
         roomName={roomName}

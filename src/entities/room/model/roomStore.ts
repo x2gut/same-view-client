@@ -16,6 +16,7 @@ const useRoomStore = create<RoomStore>((set) => ({
   roomPermissions: {
     video: "host",
     playback: "host",
+    reactions: "enabled",
   },
   setRoomPermission: (key, value) =>
     set((state) => ({

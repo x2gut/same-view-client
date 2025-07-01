@@ -1,13 +1,6 @@
 import useRoomStore from "@/entities/room/model/roomStore";
-import { RoomPermissions, SettingOption } from "@/entities/room/model/type";
-import {
-  Crown,
-  Pause,
-  Play,
-  SkipForward,
-  SquarePlay,
-  Users,
-} from "lucide-react";
+import { RoomPermissions } from "@/entities/room/model/type";
+import { Heart, Pause, Play, SkipForward, SquarePlay } from "lucide-react";
 import { changeRoomPermissons } from "../api/socket/handlers/handlers";
 import { useUserStore } from "@/entities/user/model/userStore";
 import { useEffect } from "react";
@@ -45,43 +38,11 @@ export const useRoomSettings = () => {
     };
   }, []);
 
-  const videoOptions: SettingOption[] = [
-    {
-      value: "host",
-      label: "Only Host",
-      icon: Crown,
-      iconColor: "text-warning",
-      description: "Only the host can change the video",
-      recommended: true,
-    },
-    {
-      value: "all",
-      label: "All Participants",
-      icon: Users,
-      iconColor: "text-blue-500",
-      description: "Anyone can change the video",
-      recommended: false,
-    },
-  ];
-
-  const playbackOptions: SettingOption[] = [
-    {
-      value: "host",
-      label: "Only Host",
-      icon: Crown,
-      iconColor: "text-warning",
-      description: "Only the host can control playback",
-      recommended: true,
-    },
-    {
-      value: "all",
-      label: "All Participants",
-      icon: Users,
-      iconColor: "text-blue-500",
-      description: "Anyone can pause, play, and seek",
-      recommended: false,
-    },
-  ];
+  const getReactionsIcon = () => (
+    <div className="p-2 bg-error/20 rounded-md">
+      <Heart className="text-error" size={20} />
+    </div>
+  );
 
   const getVideoSectionIcon = () => (
     <div className="p-2 bg-error/20 rounded-md">
@@ -102,9 +63,8 @@ export const useRoomSettings = () => {
   return {
     roomPermissions,
     handleChangeRoomPermission,
-    videoOptions,
-    playbackOptions,
     getVideoSectionIcon,
     getPlaybackSectionIcon,
+    getReactionsIcon,
   };
 };

@@ -32,13 +32,14 @@ export type RoomLocalStorage = Pick<
 export type RoomPermissions = {
   video: "host" | "all";
   playback: "host" | "all";
+  reactions: "enabled" | "disabled";
 };
 
-export interface SettingOption {
-  value: string;
+export interface SettingOption<T extends keyof RoomPermissions> {
+  value: RoomPermissions[T];
   label: string;
   icon: LucideIcon;
   iconColor: string;
-  description: string;
+  description?: string;
   recommended: boolean;
 }
