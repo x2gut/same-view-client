@@ -16,7 +16,7 @@ const HtmlPlayer = ({
   src: string;
   onVideoReady: () => void;
 }) => {
-  const { totalDuration, isPaused, timecode } = useVideoStore();
+  const { totalDuration, isPaused, timecode, setTimecode } = useVideoStore();
   const playerRef = useRef<HTMLVideoElement>(null);
   const [htmlPlayerAdapter, setHtmlPlayerAdapter] =
     useState<HTMLPlayerAdapter | null>(null);
@@ -136,6 +136,7 @@ const HtmlPlayer = ({
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
         <div className="relative p-4 space-y-3">
           <PlayerProgressBar
+            setTimecode={setTimecode}
             handleSeek={handleSeek}
             totalDuration={totalDuration}
             currentDuration={timecode}
