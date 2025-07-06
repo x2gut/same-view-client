@@ -36,7 +36,7 @@ const ReactionButton = () => {
             <button
               key={index}
               onClick={() => handleEmojiSelect(emoji)}
-              className="w-8 h-8 flex items-center justify-center hover:bg-accent/30 rounded text-sm cursor-pointer"
+              className="w-10 h-10 scale-150 flex items-center justify-center hover:bg-accent/30 rounded text-sm cursor-pointer"
             >
               {emoji}
             </button>
