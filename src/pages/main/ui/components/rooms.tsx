@@ -10,7 +10,7 @@ import {
   itemVariants,
 } from "../../../../shared/ui/animations";
 import { useRef, useState } from "react";
-import JoinRoomModal from "@/features/room/join-room/ui/joinRoomModal";
+import JoinRoomModal from "@/features/main/join-room/ui/joinRoomModal";
 
 const Rooms = ({
   rooms,

@@ -1,4 +1,4 @@
-import JoinRoomModal from "@/features/room/join-room/ui/joinRoomModal";
+import JoinRoomModal from "@/features/main/join-room/ui/joinRoomModal";
 import Button from "@/shared/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/Card";
 import Input from "@/shared/ui/Input";

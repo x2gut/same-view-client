@@ -9,3 +9,5 @@ export { default as CopyBadge } from "./CopyBadge";
 export { default as Avatar } from "./Avatar";
 export { default as ProgressBar } from "./ProgressBar";
 export { default as Tooltip } from "./Tooltip";
+export { default as BurgerButton } from "./mobile/BurgerButton";
+export { default as MobileMenu } from "./mobile/MobileMenu";

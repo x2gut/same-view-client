@@ -11,8 +11,8 @@ import {
 } from "../../../shared/ui/animations";
 import { HowItWorks, JoinRoomCard, Rooms } from "./components";
 import { Header, Footer } from "@/widgets";
-import CreateRoomModal from "@/features/room/create-room/ui/createRoomModal";
-import JoinRoomModal from "@/features/room/join-room/ui/joinRoomModal";
+import CreateRoomModal from "@/features/main/create-room/ui/createRoomModal";
+import JoinRoomModal from "@/features/main/join-room/ui/joinRoomModal";
 
 const MainPage = () => {
   const [isCreateRoomModalOpen, setCreateRoomModalOpen] = useState(false);

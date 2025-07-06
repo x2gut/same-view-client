@@ -31,7 +31,7 @@ const PlayerProgressBar: FC<ProgressBarProps> = ({
     setHoverPosition(percent);
   };
 
-  const {} = useDrag(progressBarRef, {
+  useDrag(progressBarRef, {
     onDrag: (event) => {
       const percent = getBoundaryClientPercent(progressBarRef, event.clientX);
       const time = totalDuration * (dragPercent / 100);
