@@ -37,7 +37,7 @@ const RoomHeader = ({
         <Button onClick={() => navigate(-1)} variant="ghost" className="px-5">
           <MoveLeft size={20} />
         </Button>
-        <h2 className="text-2xl font-semibold">{roomName}</h2>
+        <h2 className="text-2xl font-semibold max-md:hidden">{roomName}</h2>
         <CopyBadge name={roomKey} />
       </div>
       {/* Desktop */}
@@ -77,11 +77,13 @@ const RoomHeader = ({
             </div>
           )}
           {isOwner && (
-            <RoomSettingsBtn
-              onClick={() => {
-                setIsModalOpen(true);
-              }}
-            />
+            <div className="flex justify-center w-full border rounded-lg border-border py-3">
+              <RoomSettingsBtn
+                onClick={() => {
+                  setIsModalOpen(true);
+                }}
+              />
+            </div>
           )}
           <div className="p-4 w-full border-t border-accent">
             <div className="flex items-center justify-between">
