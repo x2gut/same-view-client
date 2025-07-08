@@ -1,22 +1,16 @@
 import { Button } from "@/shared/ui";
+import { ButtonProps } from "@/shared/ui/Button";
 import { Settings as SettingsIcon } from "lucide-react";
 
-interface RoomSettingsBtnProps {
+interface RoomSettingsBtnProps extends ButtonProps {
   onClick: () => void;
 }
 
-const RoomSettingsBtn = ({ onClick }: RoomSettingsBtnProps) => {
+const RoomSettingsBtn = ({ onClick, ...rest }: RoomSettingsBtnProps) => {
   return (
-    <div>
-      <Button
-        onClick={onClick}
-        variant="ghost"
-        className="text-muted hover:text-primary"
-        size="small"
-      >
-        <SettingsIcon className="" size={22} />
-      </Button>
-    </div>
+    <Button {...rest} onClick={onClick} variant="ghost" size="small">
+      <SettingsIcon size={22} />
+    </Button>
   );
 };
 

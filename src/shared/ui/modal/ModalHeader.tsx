@@ -20,7 +20,7 @@ const ModalHeader = ({
     {showCloseButton && onClose && (
       <button
         onClick={onClose}
-        className="p-1 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="p-1 rounded-full hover:bg-hover focus:outline-none focus:ring-2 focus:ring-active duration-200"
         aria-label="Close"
       >
         <X />

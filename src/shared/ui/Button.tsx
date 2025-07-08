@@ -1,15 +1,20 @@
 import { FC } from "react";
 import clsx from "clsx";
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "ghost";
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: "primary" | "secondary" | "ghost" | "custom";
   size?: "small" | "medium" | "large";
+  isDisabled?: boolean;
+  onClick?: () => void;
 }
 
 const variantStyles = {
-  primary: "bg-primary text-white hover:brightness-110 duration-200",
-  secondary: "bg-transparent hover:brightness-80 duration-200 border-2 border-accent",
+  primary: "bg-primary text-white duration-200",
+  secondary:
+    "bg-transparent hover:brightness-80 duration-200 border-2 border-accent",
   ghost: "bg-transparent hover:bg-accent duration-200",
+  custom: "",
 };
 
 const sizeStyles = {
@@ -23,15 +28,21 @@ const Button: FC<ButtonProps> = ({
   variant = "primary",
   size = "medium",
   className,
+  onClick,
+  isDisabled,
   ...rest
 }) => {
   return (
     <button
       {...rest}
+      onClick={!isDisabled && onClick}
       className={clsx(
-        "rounded-md font-medium cursor-pointer",
+        "rounded-md font-medium",
         variantStyles[variant],
         sizeStyles[size],
+        isDisabled
+          ? "cursor-not-allowed brightness-50"
+          : "cursor-pointer hover:brightness-105",
         className
       )}
     >

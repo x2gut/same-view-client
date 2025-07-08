@@ -2,6 +2,8 @@ import { RoomPermissions } from "@/entities/room/model/type";
 import ReactionButton from "@/features/room/reactions/ui/ReactionButton";
 import RoomSettingsModal from "@/features/room/roomSettings/ui/modal/RoomSettingsModal";
 import RoomSettingsBtn from "@/features/room/roomSettings/ui/RoomSettingsButton";
+import JoinVoiceButton from "@/features/room/voiceChat/ui/JoinVoiceButton";
+import VoiceModal from "@/features/room/voiceChat/ui/VoiceModal";
 import ThemeSwitcher from "@/features/switch-theme/ui/themeSwitcher";
 import checkPermissions from "@/shared/lib/checkPermissions";
 import { BurgerButton, Button, CopyBadge, MobileMenu } from "@/shared/ui";
@@ -24,7 +26,8 @@ const RoomHeader = ({
   roomPermissions: RoomPermissions;
 }) => {
   const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
+  const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleOpenMenu = () => {
@@ -42,11 +45,12 @@ const RoomHeader = ({
       </div>
       {/* Desktop */}
       <div className="flex gap-5 items-center max-md:hidden">
+        <JoinVoiceButton onClick={() => setIsVoiceModalOpen(true)} />
         {roomPermissions.reactions === "enabled" && <ReactionButton />}
         {isOwner && (
           <RoomSettingsBtn
             onClick={() => {
-              setIsModalOpen(true);
+              setIsSettingsModalOpen(true);
             }}
           />
         )}
@@ -61,6 +65,7 @@ const RoomHeader = ({
           <span>{`${hostName} ${isOwner ? "(host)" : ""}`}</span>
         </Badge>
       </div>
+
       {/* Mobile */}
       <BurgerButton onClick={toggleOpenMenu} isMenuOpen={isMenuOpen} />
       {isMenuOpen && (
@@ -77,27 +82,28 @@ const RoomHeader = ({
             </div>
           )}
           {isOwner && (
-            <div className="flex justify-center w-full border rounded-lg border-border py-3">
-              <RoomSettingsBtn
-                onClick={() => {
-                  setIsModalOpen(true);
-                }}
-              />
-            </div>
+            <RoomSettingsBtn
+              className="flex justify-center border border-border w-full py-5"
+              onClick={() => {
+                setIsSettingsModalOpen(true);
+              }}
+            />
           )}
           <div className="p-4 w-full border-t border-accent">
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium">Theme</span>
               <ThemeSwitcher />
             </div>
-          </div>{" "}
+          </div>
         </div>
       </MobileMenu>
       <RoomSettingsModal
-        isOpen={isModalOpen}
-        onClose={() => {
-          setIsModalOpen(false);
-        }}
+        isOpen={isSettingsModalOpen}
+        onClose={() => setIsSettingsModalOpen(false)}
+      />
+      <VoiceModal
+        isOpen={isVoiceModalOpen}
+        onClose={() => setIsVoiceModalOpen(false)}
       />
     </header>
   );

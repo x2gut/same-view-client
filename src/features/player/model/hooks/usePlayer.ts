@@ -1,4 +1,4 @@
-import { RefObject, useEffect } from "react";
+import { RefObject, useEffect, useRef } from "react";
 import useRoomStore from "@/entities/room/model/roomStore";
 import { useUserStore } from "@/entities/user/model/userStore";
 import usePlayerSocketEvents from "./usePlayerSocketEvents";
@@ -24,7 +24,7 @@ const usePlayer = (player: Player) => {
     toggleFullscreen,
   } = useVideoStore();
   usePlayerSocketEvents(player);
-
+  
   useEffect(() => {
     if (!player || isPaused) return;
 

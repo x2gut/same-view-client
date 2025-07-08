@@ -8,6 +8,7 @@ import { YoutubePlayerAdapter } from "@/entities/player/model/adapters/youtubePl
 import usePlayer from "../model/hooks/usePlayer";
 import FullscreenButton from "./components/fullscreenButton";
 import formatTime from "@/shared/lib/formatTime";
+import { useThrottle } from "@/shared/hooks/useThrottle";
 
 const YoutubePlayer = ({
   src,
@@ -32,6 +33,7 @@ const YoutubePlayer = ({
   const [isHovered, setIsHovered] = useState(false);
   const [shouldShowCenterIcon, setShouldShowCenterIcon] = useState(false);
   const youtubeContainerRef = useRef<HTMLDivElement | null>(null);
+  const hoverTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleVideoReady = () => {
     if (!youtubePlayerControls.current) {
@@ -41,6 +43,20 @@ const YoutubePlayer = ({
     setYoutubePlayerAdapter(adapter);
     onVideoReady();
   };
+
+  const handleMouseMove = useThrottle(() => {
+    setIsHovered(true);
+
+    if (hoverTimerRef.current) {
+      clearTimeout(hoverTimerRef.current);
+    }
+
+    const timeout = setTimeout(() => {
+      setIsHovered(false);
+    }, 3500);
+
+    hoverTimerRef.current = timeout;
+  }, 200);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -79,7 +95,11 @@ const YoutubePlayer = ({
   }, [isPaused]);
 
   return (
-    <div className="relative w-full h-full z-0" ref={youtubeContainerRef}>
+    <div
+      className="relative w-full h-full z-0"
+      ref={youtubeContainerRef}
+      onMouseMove={handleMouseMove}
+    >
       <YoutubeFrame
         hideControls
         ref={youtubePlayerControls}
