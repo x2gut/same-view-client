@@ -21,10 +21,8 @@ const useChatSocketEvents = () => {
     });
 
     chatSocket.on(ChatEvents.NEW_MESSAGE, (message: Message) => {
-      console.log(isChatVisible);
       if (!isChatVisible) {
         setHasNewMessages(true);
-        console.log(hasNewMessages);
       }
       addMessage(message);
       message.users && setUsers(message.users);

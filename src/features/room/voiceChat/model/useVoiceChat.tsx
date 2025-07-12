@@ -1,10 +1,14 @@
 import { useUserStore } from "@/entities/user/model/userStore";
 import useVoiceChatStore from "@/entities/voiceChat/model/store";
 import { VoiceChatUser } from "@/entities/voiceChat/model/type";
-import useVoice from "@/shared/hooks/useVoice";
+import { voiceChatSocket } from "@/shared/api/socket/socket";
 import { Avatar, Badge } from "@/shared/ui";
 import clsx from "clsx";
 import { Crown } from "lucide-react";
+import { emitVoiceChatJoin } from "../api/socket/handlers";
+import useRoomStore from "@/entities/room/model/roomStore";
+import useVoiceChatSocketEvents from "./useVoiceChatSocketEvents";
+import useWebRTC from "@/shared/hooks/useWebRTC";
 
 const useVoiceChat = () => {
   const {
@@ -13,21 +17,32 @@ const useVoiceChat = () => {
     toggleIsConnected,
     voiceSettings,
     changeVoiceSetting,
-    addUser,
     removeUser,
   } = useVoiceChatStore();
   const { username, isOwner } = useUserStore();
-  const { startRecordingAudio, stopRecordingAudio, isTalking } = useVoice();
+  const { roomId } = useRoomStore();
+  useVoiceChatSocketEvents();
+  const { startCaptureSound, createOffer, exitRoom, remoteStreamList } =
+    useWebRTC();
 
   const renderUserBadge = (user: VoiceChatUser) => {
     return (
       <li
         className={clsx(
-          "border-border border-2 p-2 rounded-lg hover:border-accent duration-200 flex items-center justify-between mb-3",
-          isTalking && "border-success"
+          "border-border border-2 p-2 rounded-lg hover:border-accent duration-200 flex items-center justify-between mb-3"
         )}
         key={user.username}
       >
+        {remoteStreamList.map(({ userId, stream }) => (
+          <audio
+            className="hidden"
+            key={userId}
+            autoPlay
+            ref={(el) => {
+              if (el) el.srcObject = stream;
+            }}
+          />
+        ))}
         <div className="flex items-center gap-3">
           <Avatar size="sm" status="online" />
           {user.username}
@@ -47,10 +62,29 @@ const useVoiceChat = () => {
     );
   };
 
+  const handleRecordAudio = async () => {};
+
+  const onVoiceChatConnect = () => {
+    if (!voiceChatSocket.connected) {
+      voiceChatSocket.connect();
+    }
+    emitVoiceChatJoin(roomId, username);
+    startCaptureSound();
+
+    users.forEach((user) => {
+      createOffer(user.id);
+    });
+  };
+
+  const onVoiceChatDisconnect = () => {
+    voiceChatSocket.disconnect();
+
+    removeUser(username);
+    exitRoom();
+  };
+
   const handleVoiceChatConnection = () => {
-    isConnected
-      ? removeUser(username)
-      : addUser({ username, isMuted: false, isDeaf: false });
+    isConnected ? onVoiceChatDisconnect() : onVoiceChatConnect();
     toggleIsConnected();
   };
 
@@ -71,12 +105,12 @@ const useVoiceChat = () => {
 
   return {
     handleVoiceChatConnection,
-    startRecordingAudio,
-    stopRecordingAudio,
+    handleRecordAudio,
     renderUserBadge,
     users,
     isConnected,
     voiceSettings,
+    onVoiceChatConnect,
     voiceSettingsActions,
   };
 };

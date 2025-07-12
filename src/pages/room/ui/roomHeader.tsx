@@ -2,10 +2,11 @@ import { RoomPermissions } from "@/entities/room/model/type";
 import ReactionButton from "@/features/room/reactions/ui/ReactionButton";
 import RoomSettingsModal from "@/features/room/roomSettings/ui/modal/RoomSettingsModal";
 import RoomSettingsBtn from "@/features/room/roomSettings/ui/RoomSettingsButton";
+import { emitGetVoiceChatUsers } from "@/features/room/voiceChat/api/socket/handlers";
 import JoinVoiceButton from "@/features/room/voiceChat/ui/JoinVoiceButton";
 import VoiceModal from "@/features/room/voiceChat/ui/VoiceModal";
 import ThemeSwitcher from "@/features/switch-theme/ui/themeSwitcher";
-import checkPermissions from "@/shared/lib/checkPermissions";
+import { voiceChatSocket } from "@/shared/api/socket/socket";
 import { BurgerButton, Button, CopyBadge, MobileMenu } from "@/shared/ui";
 import Badge from "@/shared/ui/Badge";
 import { MoveLeft } from "lucide-react";
@@ -18,12 +19,14 @@ const RoomHeader = ({
   roomKey,
   isOwner,
   roomPermissions,
+  roomId,
 }: {
   roomName: string;
   hostName: string;
   roomKey: string;
   isOwner: boolean;
   roomPermissions: RoomPermissions;
+  roomId;
 }) => {
   const navigate = useNavigate();
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
@@ -32,6 +35,14 @@ const RoomHeader = ({
 
   const toggleOpenMenu = () => {
     setIsMenuOpen((state) => !state);
+  };
+
+  const handleButtonClick = () => {
+    if (!voiceChatSocket.connected) {
+      voiceChatSocket.connect();
+    }
+    setIsVoiceModalOpen(true);
+    emitGetVoiceChatUsers(roomId);
   };
 
   return (
@@ -45,7 +56,7 @@ const RoomHeader = ({
       </div>
       {/* Desktop */}
       <div className="flex gap-5 items-center max-md:hidden">
-        <JoinVoiceButton onClick={() => setIsVoiceModalOpen(true)} />
+        <JoinVoiceButton onClick={handleButtonClick} />
         {roomPermissions.reactions === "enabled" && <ReactionButton />}
         {isOwner && (
           <RoomSettingsBtn
@@ -89,6 +100,7 @@ const RoomHeader = ({
               }}
             />
           )}
+          <JoinVoiceButton onClick={handleButtonClick} />
           <div className="p-4 w-full border-t border-accent">
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium">Theme</span>

@@ -26,8 +26,6 @@ const VoiceModal: FC<VoiceModalProps> = ({ isOpen, onClose }) => {
     handleVoiceChatConnection,
     voiceSettings,
     voiceSettingsActions,
-    startRecordingAudio,
-    stopRecordingAudio,
   } = useVoiceChat();
 
   return (
@@ -44,6 +42,7 @@ const VoiceModal: FC<VoiceModalProps> = ({ isOpen, onClose }) => {
           <Users />
           Participants ({users.length})
         </h4>
+
         <ul>{users.map((user) => renderUserBadge(user))}</ul>
       </ModalBody>
       <ModalFooter className="flex flex-col gap-3">
@@ -61,9 +60,8 @@ const VoiceModal: FC<VoiceModalProps> = ({ isOpen, onClose }) => {
         {!isConnected ? (
           <div className="w-full flex flex-col justify-center">
             <Button
-              onClick={async () => {
+              onClick={() => {
                 handleVoiceChatConnection();
-                await startRecordingAudio();
               }}
               className="flex items-center justify-center gap-2 flex-1 bg-success"
               size="small"
@@ -77,7 +75,6 @@ const VoiceModal: FC<VoiceModalProps> = ({ isOpen, onClose }) => {
             <Button
               onClick={() => {
                 handleVoiceChatConnection();
-                stopRecordingAudio();
               }}
               size="small"
               variant="custom"

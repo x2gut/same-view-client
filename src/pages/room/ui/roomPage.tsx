@@ -35,6 +35,7 @@ const RoomPage = () => {
     <div className="relative flex flex-col w-full h-screen overflow-hidden">
       <RoomHeader
         roomPermissions={roomPermissions}
+        roomId={params.id}
         isOwner={isOwner}
         roomKey={roomKey}
         roomName={roomName}

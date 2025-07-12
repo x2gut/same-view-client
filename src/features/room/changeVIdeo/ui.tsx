@@ -31,7 +31,7 @@ const ChangeVideoInput = ({
         placeholder="Enter Youtube URL"
       />
       <Button
-        isDisabled={checkPermissions(isOwner, "all")}
+        isDisabled={!checkPermissions(isOwner, "all")}
         onClick={() => {
           changeVideo(inputRef.current.value, roomId, username);
           inputRef.current.value = "";

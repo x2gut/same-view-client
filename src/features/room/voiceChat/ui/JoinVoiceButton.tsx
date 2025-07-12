@@ -1,6 +1,6 @@
 import useVoiceChatStore from "@/entities/voiceChat/model/store";
 import { Badge, Button } from "@/shared/ui";
-import { Divide, Plus, Users } from "lucide-react";
+import { Plus, Users } from "lucide-react";
 import { FC } from "react";
 
 interface JoinVoiceButtonProps {
@@ -14,7 +14,9 @@ const JoinVoiceButton: FC<JoinVoiceButtonProps> = ({ onClick }) => {
     <>
       {!isConnected ? (
         <Button
-          onClick={onClick}
+          onClick={() => {
+            onClick();
+          }}
           variant="ghost"
           className="flex items-center gap-2 text-success"
         >

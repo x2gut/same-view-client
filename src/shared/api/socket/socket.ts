@@ -7,3 +7,10 @@ export const chatSocket: Socket = io(`${import.meta.env.VITE_API_URL}/chat`, {
 export const videoSocket: Socket = io(`${import.meta.env.VITE_API_URL}/video`, {
   transports: ["websocket"],
 });
+
+export const voiceChatSocket: Socket = io(
+  `${import.meta.env.VITE_API_URL}/voice`,
+  {
+    transports: ["websocket"],
+  }
+);

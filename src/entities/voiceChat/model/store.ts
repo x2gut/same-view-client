@@ -12,12 +12,14 @@ interface VoiceChatProps {
   toggleIsConnected: () => void;
   addUser: (user: VoiceChatUser) => void;
   removeUser: (username: string) => void;
+  setUsers: (users: VoiceChatUser[]) => void;
 }
 
 const useVoiceChatStore = create<VoiceChatProps>((set) => ({
   users: [],
   isConnected: false,
   voiceSettings: { isMuted: false, isDeaf: false },
+  setUsers: (users) => set({ users: users }),
   changeVoiceSetting: (key, value) =>
     set((state) => ({
       voiceSettings: { ...state.voiceSettings, [key]: value },
