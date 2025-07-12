@@ -14,13 +14,15 @@ const useWebRTC = () => {
   const [remoteStreamList, setRemoteStreamList] = useState<
     { userId: string; stream: MediaStream }[]
   >([]);
-  const [isConnecting, setIsConnecting] = useState(false);
 
   const startCaptureSound = useCallback(async () => {
     if (!localMediaStream.current) {
-      setIsConnecting(true);
       localMediaStream.current = await navigator.mediaDevices.getUserMedia({
-        audio: true,
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true,
+        },
       });
     }
   }, []);
@@ -118,14 +120,6 @@ const useWebRTC = () => {
         return;
       }
 
-      if (pc.signalingState !== "have-local-offer") {
-        console.warn(
-          "Skipping setRemoteDescription: wrong signaling state",
-          pc.signalingState
-        );
-        return;
-      }
-
       await pc.setRemoteDescription(new RTCSessionDescription(data));
     } catch (err) {
       console.error("Failed to handle answer:", err);
@@ -213,7 +207,6 @@ const useWebRTC = () => {
     removePeer,
     remoteStreamList,
     localMediaStream,
-    isConnecting,
   };
 };
 
