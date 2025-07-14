@@ -26,10 +26,6 @@ const useWebRTC = () => {
         },
       });
     }
-
-    localMediaStream.current
-      .getAudioTracks()
-      .forEach((track) => (track.enabled = !isMuted));
   }, []);
 
   const toggleMute = () => {
@@ -37,9 +33,11 @@ const useWebRTC = () => {
 
     const newState = !isMuted;
 
+    console.log(newState);
+
     localMediaStream.current
       .getAudioTracks()
-      .forEach((track) => (track.enabled = newState));
+      .forEach((track) => (track.enabled = !newState));
 
     setIsMuted(newState);
   };
