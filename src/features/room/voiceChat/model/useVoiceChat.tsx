@@ -42,6 +42,7 @@ const useVoiceChat = () => {
           <audio
             className="hidden"
             key={userId}
+            muted={voiceSettings.isDeaf}
             autoPlay
             ref={(el) => {
               if (el) el.srcObject = stream;
