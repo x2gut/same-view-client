@@ -29,7 +29,7 @@ const useWebRTC = () => {
 
     localMediaStream.current
       .getAudioTracks()
-      .forEach((track) => (track.enabled = isMuted));
+      .forEach((track) => (track.enabled = !isMuted));
   }, []);
 
   const toggleMute = () => {
@@ -51,17 +51,15 @@ const useWebRTC = () => {
       if (!peerConnections.current.has(peerId)) {
         const pc = new RTCPeerConnection(ICE_SERVERS);
 
-        // Add local tracks
         if (localMediaStream.current) {
           localMediaStream.current.getTracks().forEach((track) => {
             pc.addTrack(track, localMediaStream.current!);
           });
         }
 
-        // Prepare remote stream
         const remoteStream = new MediaStream();
         setRemoteStreamList((prev) => [
-          ...prev.filter((item) => item.userId !== peerId), // Remove duplicates
+          ...prev.filter((item) => item.userId !== peerId),
           { userId: peerId, stream: remoteStream },
         ]);
 
