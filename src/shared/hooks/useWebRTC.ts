@@ -10,6 +10,7 @@ const ICE_SERVERS = {
 const useWebRTC = () => {
   const peerConnections = useRef<Map<string, RTCPeerConnection>>(new Map());
   const localMediaStream = useRef<MediaStream | null>(null);
+  const [isMuted, setIsMuted] = useState(false);
 
   const [remoteStreamList, setRemoteStreamList] = useState<
     { userId: string; stream: MediaStream }[]
@@ -25,7 +26,23 @@ const useWebRTC = () => {
         },
       });
     }
+
+    localMediaStream.current
+      .getAudioTracks()
+      .forEach((track) => (track.enabled = isMuted));
   }, []);
+
+  const toggleMute = () => {
+    if (!localMediaStream.current) return;
+
+    const newState = !isMuted;
+
+    localMediaStream.current
+      .getAudioTracks()
+      .forEach((track) => (track.enabled = newState));
+
+    setIsMuted(newState);
+  };
 
   const createPeerConnection = useCallback(
     async (peerId: string): Promise<RTCPeerConnection> => {
@@ -207,6 +224,7 @@ const useWebRTC = () => {
     removePeer,
     remoteStreamList,
     localMediaStream,
+    toggleMute,
   };
 };
 

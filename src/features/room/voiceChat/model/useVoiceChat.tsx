@@ -22,8 +22,13 @@ const useVoiceChat = () => {
   const { username, isOwner } = useUserStore();
   const { roomId } = useRoomStore();
   useVoiceChatSocketEvents();
-  const { startCaptureSound, createOffer, exitRoom, remoteStreamList } =
-    useWebRTC();
+  const {
+    startCaptureSound,
+    createOffer,
+    exitRoom,
+    remoteStreamList,
+    toggleMute,
+  } = useWebRTC();
 
   const renderUserBadge = (user: VoiceChatUser) => {
     return (
@@ -91,9 +96,11 @@ const useVoiceChat = () => {
   const voiceSettingsActions = {
     handleMute: () => {
       changeVoiceSetting("isMuted", true);
+      toggleMute();
     },
     handleUnMute: () => {
       changeVoiceSetting("isMuted", false);
+      toggleMute();
     },
     handleDeaf: () => {
       changeVoiceSetting("isDeaf", true);
