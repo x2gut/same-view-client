@@ -19,17 +19,3 @@ export type UserMessage = {
   timestamp: string;
   message: string;
 };
-
-export type MessageCardProps =
-  | {
-      type: "system";
-      message: string;
-      timestamp: string;
-    }
-  | {
-      type: "user";
-      username: string;
-      senderUsername: string;
-      message: string;
-      timestamp: string;
-    };

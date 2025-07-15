@@ -22,6 +22,8 @@ const JoinVoiceButton: FC<JoinVoiceButtonProps> = ({ onClick }) => {
         >
           <Plus size={18} />
           Voice Chat
+          <Users size={16} />
+          {users.length}
         </Button>
       ) : (
         <Badge

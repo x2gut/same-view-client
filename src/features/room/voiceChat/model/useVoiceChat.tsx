@@ -8,6 +8,7 @@ import { Crown, MicOff, HeadphoneOff } from "lucide-react";
 import {
   emitChangeUserStatus,
   emitVoiceChatJoin,
+  emitVoiceChatLeft,
 } from "../api/socket/handlers";
 import useRoomStore from "@/entities/room/model/roomStore";
 import useVoiceChatSocketEvents from "./useVoiceChatSocketEvents";
@@ -92,7 +93,7 @@ const useVoiceChat = () => {
   };
 
   const onVoiceChatDisconnect = () => {
-    voiceChatSocket.disconnect();
+    emitVoiceChatLeft();
 
     removeUser(username);
     exitRoom();

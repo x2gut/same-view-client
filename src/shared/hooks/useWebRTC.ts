@@ -16,7 +16,7 @@ const useWebRTC = () => {
     { userId: string; stream: MediaStream }[]
   >([]);
 
-  const startCaptureSound = useCallback(async () => {
+  const startCaptureSound = async () => {
     if (!localMediaStream.current) {
       localMediaStream.current = await navigator.mediaDevices.getUserMedia({
         audio: {
@@ -26,7 +26,7 @@ const useWebRTC = () => {
         },
       });
     }
-  }, []);
+  };
 
   const toggleMute = () => {
     if (!localMediaStream.current) return;
@@ -202,6 +202,7 @@ const useWebRTC = () => {
   // Cleanup on unmount
   useEffect(() => {
     return () => {
+      console.log("Unmounted")
       exitRoom();
     };
   }, [exitRoom]);

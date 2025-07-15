@@ -37,7 +37,7 @@ const Button: FC<ButtonProps> = ({
       {...rest}
       onClick={!isDisabled && onClick}
       className={clsx(
-        "rounded-md font-medium",
+        "rounded-md font-medium active:scale-[1.01]",
         variantStyles[variant],
         sizeStyles[size],
         isDisabled

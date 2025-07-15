@@ -1,7 +1,22 @@
 import { Avatar } from "@/shared/ui";
-import { MessageCardProps } from "../model/type";
 import { Bell } from "lucide-react";
 import formatDuration from "@/shared/lib/formatDuration";
+import clsx from "clsx";
+
+export type MessageCardProps =
+  | {
+      type: "system";
+      message: string;
+      timestamp: string;
+    }
+  | {
+      type: "user";
+      username: string;
+      senderUsername: string;
+      message: string;
+      timestamp: string;
+      isLastMessage: boolean;
+    };
 
 const MessageCard = (props: MessageCardProps) => {
   if (props.type === "system") {
@@ -17,27 +32,28 @@ const MessageCard = (props: MessageCardProps) => {
       </div>
     );
   } else {
-    const { username, senderUsername, timestamp, message } = props;
+    const { username, senderUsername, timestamp, message, isLastMessage } =
+      props;
     const isOwnMessage = username === senderUsername;
     return (
       <div className={`w-full mb-4 ${isOwnMessage ? "flex justify-end" : ""}`}>
-        {!isOwnMessage && (
-          <div className="mb-1">
-            <p className="text-sm font-medium text-gray-600 px-4">
-              {senderUsername}
-            </p>
-          </div>
-        )}
-
         <div className="flex items-end gap-3 max-w-[70%] min-w-0">
-          {!isOwnMessage && <Avatar size="sm" className="flex-shrink-0" />}
+          {!isOwnMessage && isLastMessage && (
+            <Avatar name={senderUsername} size="sm" className="flex-shrink-0" />
+          )}
 
           <div className="flex flex-col">
             <div
               className={`px-4 py-3 rounded-2xl ${
                 isOwnMessage
-                  ? "bg-blue-500 text-white rounded-br-md"
-                  : "bg-gray-100 text-gray-800 rounded-bl-md"
+                  ? clsx(
+                      "bg-blue-500 text-white",
+                      isLastMessage && "rounded-br-md"
+                    )
+                  : clsx(
+                      "bg-gray-100 text-gray-800",
+                      isLastMessage && "rounded-bl-md"
+                    )
               }`}
             >
               <p className="leading-relaxed break-words break-all w-full overflow-wrap-anywhere">
@@ -50,7 +66,7 @@ const MessageCard = (props: MessageCardProps) => {
                 isOwnMessage ? "text-right" : "text-left"
               }`}
             >
-              {formatDuration(timestamp)}
+              {isLastMessage && formatDuration(timestamp)}
             </p>
           </div>
         </div>

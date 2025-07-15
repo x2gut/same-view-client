@@ -10,8 +10,9 @@ import {
   PhoneOff,
   Users,
 } from "lucide-react";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import useVoiceChat from "../model/useVoiceChat";
+import { voiceChatSocket } from "@/shared/api/socket/socket";
 
 interface VoiceModalProps {
   isOpen: boolean;
@@ -57,8 +58,6 @@ const VoiceModal: FC<VoiceModalProps> = ({ isOpen, onClose }) => {
             {isConnected ? "Connected" : "Disconnected"}
           </Badge>
         </div>
-        
-
 
         {!isConnected ? (
           <div className="w-full flex flex-col justify-center">
