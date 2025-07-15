@@ -4,8 +4,11 @@ import { VoiceChatUser } from "@/entities/voiceChat/model/type";
 import { voiceChatSocket } from "@/shared/api/socket/socket";
 import { Avatar, Badge } from "@/shared/ui";
 import clsx from "clsx";
-import { Crown } from "lucide-react";
-import { emitVoiceChatJoin } from "../api/socket/handlers";
+import { Crown, MicOff, HeadphoneOff } from "lucide-react";
+import {
+  emitChangeUserStatus,
+  emitVoiceChatJoin,
+} from "../api/socket/handlers";
 import useRoomStore from "@/entities/room/model/roomStore";
 import useVoiceChatSocketEvents from "./useVoiceChatSocketEvents";
 import useWebRTC from "@/shared/hooks/useWebRTC";
@@ -51,7 +54,15 @@ const useVoiceChat = () => {
         ))}
         <div className="flex items-center gap-3">
           <Avatar size="sm" status="online" />
-          {user.username}
+          <span>{user.username}</span>
+          <div className="flex items-center gap-1">
+            {user.settings?.isMuted && (
+              <MicOff size={16} className="text-muted" />
+            )}
+            {user.settings?.isDeaf && (
+              <HeadphoneOff size={16} className="text-muted" />
+            )}
+          </div>
         </div>
         <div>
           {isOwner && username === user.username ? (
@@ -67,8 +78,6 @@ const useVoiceChat = () => {
       </li>
     );
   };
-
-  const handleRecordAudio = async () => {};
 
   const onVoiceChatConnect = () => {
     if (!voiceChatSocket.connected) {
@@ -98,22 +107,49 @@ const useVoiceChat = () => {
     handleMute: () => {
       changeVoiceSetting("isMuted", true);
       toggleMute();
+      emitChangeUserStatus(roomId, {
+        username: username,
+        settings: {
+          isMuted: true,
+          isDeaf: voiceSettings.isDeaf,
+        },
+      });
     },
     handleUnMute: () => {
       changeVoiceSetting("isMuted", false);
+      emitChangeUserStatus(roomId, {
+        username: username,
+        settings: {
+          isMuted: false,
+          isDeaf: voiceSettings.isDeaf,
+        },
+      });
       toggleMute();
     },
     handleDeaf: () => {
       changeVoiceSetting("isDeaf", true);
+      emitChangeUserStatus(roomId, {
+        username: username,
+        settings: {
+          isMuted: voiceSettings.isMuted,
+          isDeaf: true,
+        },
+      });
     },
     handleUnDeaf: () => {
       changeVoiceSetting("isDeaf", false);
+      emitChangeUserStatus(roomId, {
+        username: username,
+        settings: {
+          isMuted: voiceSettings.isMuted,
+          isDeaf: false,
+        },
+      });
     },
   };
 
   return {
     handleVoiceChatConnection,
-    handleRecordAudio,
     renderUserBadge,
     users,
     isConnected,

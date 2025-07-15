@@ -1,8 +1,7 @@
 export type VoiceChatUser = {
   id: string;
   username: string;
-  isMuted: boolean;
-  isDeaf: boolean;
+  settings: VoiceSettings;
 };
 
 export type VoiceChat = {
@@ -22,4 +21,8 @@ export type UserJoinVoiceData = {
 
 export type UserLefVoiceData = {
   username: string;
+};
+
+export type UpdatedUser = {
+  updatedUser: VoiceChatUser; 
 };

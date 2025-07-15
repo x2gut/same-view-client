@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { VoiceChatEvents } from "@/entities/voiceChat/model/events";
 import useVoiceChatStore from "@/entities/voiceChat/model/store";
 import {
+  UpdatedUser,
   UserJoinVoiceData,
   UserLefVoiceData,
   VoiceChatUser,
@@ -10,7 +11,7 @@ import {
 import { voiceChatSocket } from "@/shared/api/socket/socket";
 
 const useVoiceChatSocketEvents = () => {
-  const { addUser, removeUser, setUsers } = useVoiceChatStore();
+  const { addUser, removeUser, setUsers, updateUser } = useVoiceChatStore();
 
   useEffect(() => {
     voiceChatSocket.on(
@@ -18,10 +19,19 @@ const useVoiceChatSocketEvents = () => {
       (data: UserJoinVoiceData) => {
         addUser({
           username: data.username,
-          isDeaf: false,
-          isMuted: false,
           id: data.id,
+          settings: {
+            isDeaf: false,
+            isMuted: false,
+          },
         });
+      }
+    );
+
+    voiceChatSocket.on(
+      VoiceChatEvents.CHANGE_USER_STATUS,
+      (data: UpdatedUser) => {
+        updateUser(data.updatedUser.username, data.updatedUser.settings);
       }
     );
 
@@ -40,6 +50,7 @@ const useVoiceChatSocketEvents = () => {
       voiceChatSocket.off(VoiceChatEvents.USER_JOINED);
       voiceChatSocket.off(VoiceChatEvents.USER_LEFT);
       voiceChatSocket.off(VoiceChatEvents.GET_USERS);
+      voiceChatSocket.off(VoiceChatEvents.CHANGE_USER_STATUS);
     };
   }, []);
 };

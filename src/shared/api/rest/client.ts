@@ -33,7 +33,7 @@ class ApiClient {
       });
 
       if (!response.ok) {
-        const errorData = await response.json()
+        const errorData = await response.json();
         throw new BaseApiError(
           errorData.message || "Unexpected error",
           response.status
@@ -41,7 +41,9 @@ class ApiClient {
       }
       return await response.json();
     } catch (error) {
-      console.log(`Request ${route} with method: ${method} failed -> ${error}`);
+      console.error(
+        `Request ${route} with method: ${method} failed -> ${error}`
+      );
       throw error;
     }
   }

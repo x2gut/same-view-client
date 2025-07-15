@@ -41,7 +41,6 @@ const useChangeVideo = () => {
 
   useEffect(() => {
     videoSocket.on(VideoEvents.VIDEO_CHANGED, (data: { videoUrl: string }) => {
-      console.log(data);
       setVideoUrl(data.videoUrl);
       setTimecode(0);
     });

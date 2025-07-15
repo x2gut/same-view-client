@@ -23,7 +23,6 @@ const JoinRoomCard: FC<JoinRoomCardProps> = ({ handleModalOpen }) => {
           <Button
             onClick={() => {
               handleModalOpen(true);
-              console.log(inputRef.current?.value);
             }}
             className="flex-1"
           >

@@ -31,15 +31,11 @@ const useWebRTC = () => {
   const toggleMute = () => {
     if (!localMediaStream.current) return;
 
-    const newState = !isMuted;
-
-    console.log(newState);
-
     localMediaStream.current
       .getAudioTracks()
-      .forEach((track) => (track.enabled = !newState));
+      .forEach((track) => (track.enabled = isMuted));
 
-    setIsMuted(newState);
+    setIsMuted((prev) => !prev);
   };
 
   const createPeerConnection = useCallback(

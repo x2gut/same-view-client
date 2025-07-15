@@ -57,6 +57,9 @@ const VoiceModal: FC<VoiceModalProps> = ({ isOpen, onClose }) => {
             {isConnected ? "Connected" : "Disconnected"}
           </Badge>
         </div>
+        
+
+
         {!isConnected ? (
           <div className="w-full flex flex-col justify-center">
             <Button
@@ -95,9 +98,9 @@ const VoiceModal: FC<VoiceModalProps> = ({ isOpen, onClose }) => {
                 size="small"
               >
                 {voiceSettings.isMuted ? (
-                  <Mic size={18} />
-                ) : (
                   <MicOff size={18} />
+                ) : (
+                  <Mic size={18} />
                 )}
                 {voiceSettings.isMuted ? "Unmute" : "Mute"}
               </Button>
@@ -112,9 +115,9 @@ const VoiceModal: FC<VoiceModalProps> = ({ isOpen, onClose }) => {
                 size="small"
               >
                 {voiceSettings.isDeaf ? (
-                  <Headphones size={18} />
-                ) : (
                   <HeadphoneOff size={18} />
+                ) : (
+                  <Headphones size={18} />
                 )}
                 Turn {voiceSettings.isDeaf ? "on" : "off"} Sounds
               </Button>
